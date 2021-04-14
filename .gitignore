@@ -1,0 +1,12 @@
+.gradle/
+build
+
+.idea
+*.iml
+out
+
+*-version.txt
+
+logs
+.DS_Store
+.gradletasknamecache
