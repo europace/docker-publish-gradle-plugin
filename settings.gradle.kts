@@ -1,1 +1,1 @@
-rootProject.name = "docker-publish-gradle-plugin"
+rootProject.name = "docker-publish-plugin"

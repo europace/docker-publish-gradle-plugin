@@ -1,4 +1,4 @@
-package de.europace.gradle.docker.publish
+package de.europace.spring.boot.docker.publish
 
 import de.gesellix.gradle.docker.tasks.DockerBuildTask
 import de.gesellix.gradle.docker.tasks.DockerPushTask
@@ -15,14 +15,13 @@ open class DockerPublishPlugin : Plugin<Project> {
     val extension: DockerPublishExtension = project.extensions.create("dockerPublish", DockerPublishExtension::class.java)
 
     project.afterEvaluate {
-      val orga = extension.orga.get()
+      val orga = extension.organisation.get()
       val imageName = extension.imageName.getOrElse(project.name)
+      val imageTag = extension.imageTag.getOrElse(project.version as String)
       val dockerBuildContextSources = extension.dockerBuildContextSources.getOrElse("${project.projectDir.path}/src/main/docker")
       val dockerBuildContextDir = extension.dockerBuildContextDir.getOrElse("${project.buildDir.path}/docker")
-      val imageTag = extension.dockerImageTag.get()
 
-      val dockerImageName = "$orga/$imageName"
-      val dockerImageId = "$dockerImageName:${imageTag ?: project.version}"
+      val dockerImageId = "$orga/$imageName:$imageTag"
 
       project.pluginManager.apply(PublishingPlugin::class.java)
 
