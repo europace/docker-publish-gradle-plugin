@@ -1,4 +1,4 @@
-# Docker Publish Gradle Plugin
+# Spring-Boot Docker Publish Gradle Plugin
 
 A Gradle plugin to build and publish a spring-boot-service to docker hub
 
@@ -8,7 +8,7 @@ The plugin is available on the official [Gradle plugin portal](https://plugins.g
 docker hub.
 
     plugins {
-      id("de.europace.gradle.docker-publish") version "..."
+      id("de.europace.spring-boot.docker-publish") version "..."
     }
 
 ## Contributing
