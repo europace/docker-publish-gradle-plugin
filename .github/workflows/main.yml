@@ -15,6 +15,12 @@ jobs:
           java-version: 1.8
       - name: Clean build
         run: ./gradlew clean build --info --stacktrace
+      - name: Publish Test Report
+        if: ${{ always() }}
+        uses: scacap/action-surefire-report@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          report_paths: '**/build/test-results/test/TEST-*.xml'
 #      - name: Publish to Gradle Plugin Portal
 #        if: github.event_name == 'push' && github.event.ref == 'refs/heads/main'
 #        # According to https://github.com/gradle/gradle/issues/1295 we cannot pass parameters containing dots via environment,
