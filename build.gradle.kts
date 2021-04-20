@@ -39,7 +39,6 @@ java {
 
 tasks {
   withType<Test> {
-    systemProperties(System.getProperties().map { it.key.toString() to it.value }.toMap())
     useJUnitPlatform()
   }
   withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
