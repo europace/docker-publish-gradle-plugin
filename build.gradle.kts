@@ -13,7 +13,7 @@ plugins {
   `java-gradle-plugin`
   kotlin("jvm") version "1.4.32"
   id("de.gesellix.docker") version "2021-04-07T17-02-20"
-  id("com.gradle.plugin-publish") version "0.10.1"
+  id("com.gradle.plugin-publish") version "0.14.0"
 }
 
 group = "de.europace.gradle"
