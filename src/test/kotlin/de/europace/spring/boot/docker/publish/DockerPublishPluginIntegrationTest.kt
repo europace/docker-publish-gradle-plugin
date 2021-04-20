@@ -7,7 +7,6 @@ import io.kotest.matchers.string.shouldStartWith
 import java.io.File
 import org.gradle.internal.impldep.org.junit.Rule
 import org.gradle.internal.impldep.org.junit.rules.TemporaryFolder
-import org.gradle.testfixtures.ProjectBuilder
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.UnexpectedBuildFailure
 
@@ -30,7 +29,6 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
     }
 
     "buildImage should have tasks in right order" {
-      val project = ProjectBuilder.builder().build()
       buildFile.writeText(
         """
         plugins {
@@ -70,7 +68,6 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
     }
 
     "buildImage should fail if no organisation is set" {
-      val project = ProjectBuilder.builder().build()
       buildFile.writeText(
         """
         plugins {
@@ -105,7 +102,6 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
     }
 
     "buildImage shoud fail if no bootJar task is available" {
-      val project = ProjectBuilder.builder().build()
       buildFile.writeText(
         """
         plugins {
