@@ -8,6 +8,8 @@ buildscript {
   }
 }
 val javaVersion = JavaVersion.VERSION_1_8
+val kotestVersion = "4.4.3"
+val mockkVersion = "1.11.0"
 
 plugins {
   `maven-publish`
@@ -20,8 +22,10 @@ group = "de.europace.gradle"
 version = now().format(ofPattern("yyyy-MM-dd\'T\'HH-mm-ss"))
 logger.lifecycle("version: $version")
 
-val dependencyVersions = listOf<String>(
-  "com.squareup.okio:okio:2.10.0"
+val dependencyVersions = listOf(
+    "com.squareup.okio:okio:2.10.0",
+    "io.mockk:mockk:$mockkVersion",
+    "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
 )
 
 val dependencyVersionsByGroup = mapOf<String, String>(
@@ -34,6 +38,9 @@ java {
 }
 
 tasks {
+  withType<Test> {
+    useJUnitPlatform()
+  }
   withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
       jvmTarget = javaVersion.toString()
@@ -49,6 +56,12 @@ repositories {
 dependencies {
   implementation(gradleApi())
   implementation("de.gesellix:gradle-docker-plugin:2021-04-07T17-02-20")
+
+  testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion")
+  testImplementation("io.kotest:kotest-framework-engine-jvm:$kotestVersion")
+  testImplementation("io.kotest:kotest-property-jvm:$kotestVersion")
+  testImplementation("io.kotest:kotest-runner-junit5-jvm:$kotestVersion")
+  testImplementation("io.mockk:mockk:$mockkVersion")
 }
 
 allprojects {
