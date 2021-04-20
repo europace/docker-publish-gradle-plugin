@@ -70,7 +70,7 @@ allprojects {
 pluginBundle {
   website = "https://github.com/europace/docker-publish-gradle-plugin"
   vcsUrl = "https://github.com/europace/docker-publish-gradle-plugin"
-  tags = listOf("docker", "publish", "publishing")
+  tags = listOf("docker", "spring-boot", "publish", "publishing")
 }
 
 gradlePlugin {
