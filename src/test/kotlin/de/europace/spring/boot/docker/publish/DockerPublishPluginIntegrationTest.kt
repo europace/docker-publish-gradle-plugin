@@ -69,7 +69,7 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
       result.output shouldContain "BUILD SUCCESSFUL"
     }
 
-    "buildImage fail if no organisation is set " {
+    "buildImage should fail if no organisation is set" {
       val project = ProjectBuilder.builder().build()
       buildFile.writeText(
         """
@@ -104,7 +104,7 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
       exception.message shouldContain "BUILD FAILED"
     }
 
-    "buildImage fail if no bootJar task is available " {
+    "buildImage shoud fail if no bootJar task is available" {
       val project = ProjectBuilder.builder().build()
       buildFile.writeText(
         """
