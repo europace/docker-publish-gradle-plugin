@@ -101,7 +101,7 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
       exception.message shouldContain "BUILD FAILED"
     }
 
-    "buildImage shoud fail if no bootJar task is available" {
+    "buildImage should fail if no bootJar task is available" {
       buildFile.writeText(
         """
         plugins {
