@@ -1,15 +1,33 @@
 # Spring-Boot Docker Publish Gradle Plugin
 
-A Gradle plugin to build and publish a spring-boot-service to docker hub
+A Gradle plugin to build and publish a docker image to docker hub. The plugin was created to get rid of copied code in our spring-boot microservices. Therefore some of the default values are related
+to the [spring-boot-plugin](https://plugins.gradle.org/plugin/org.springframework.boot)
 
 ## Usage
 
-The plugin is available on the official [Gradle plugin portal](https://plugins.gradle.org/plugin/de.europace.gradle.docker-publish). You need to apply it to the subprojects you want to publish to
-docker hub.
+The plugin is available on the official [Gradle plugin portal](https://plugins.gradle.org/plugin/de.europace.docker-publish). You need to apply it to the subprojects you want to publish to docker hub.
 
     plugins {
-      id("de.europace.spring-boot.docker-publish") version "..."
+      id("de.europace.docker-publish") version "..."
     }
+    
+    dockerPublish{
+        organisation.set("my-dockerhub-organisation")
+    }
+
+### Configuration
+
+The configuration of the plugin is done in a block called `dockerPublish`
+
+| Name | Description           | Default Value |
+|---------------------|------------------------|------------------------|
+| organisation       | the namespace/organisation of you docker repository | mandatory
+| imageName       | the name of you docker repository | project.name
+| imageTag       | the tag of your docker image | project.version
+| useArtifactFromTask       | Flag if your docker image relates on output from a task | true
+| artifactTaskName       | the name of the task the docker image depends on | "bootJar"
+| dockerBuildContextSources       | The location (folder) of your docker file  |"${project.projectDir.path}/src/main/docker"
+| dockerBuildContextDir       | The destination (folder) of your docker file  |"${project.buildDir.path}/docker"
 
 ## Contributing
 

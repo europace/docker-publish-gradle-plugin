@@ -9,10 +9,16 @@ abstract class DockerPublishExtension @Inject constructor(project: Project) {
   abstract val organisation: Property<String>
   abstract val imageName: Property<String>
   abstract val imageTag: Property<String>
+  abstract val artifactTaskName: Property<String>
+  abstract val artifactName: Property<String>
+  abstract val useArtifactFromTask: Property<Boolean>
   abstract val dockerBuildContextSources: Property<String>
   abstract val dockerBuildContextDir: Property<String>
 
   init {
+    artifactTaskName.convention("bootJar")
+    artifactName.convention("application.jar")
+    useArtifactFromTask.convention(true)
     imageName.convention(project.name)
     imageTag.convention(project.version as String)
     dockerBuildContextSources.convention("${project.projectDir.path}/src/main/docker")

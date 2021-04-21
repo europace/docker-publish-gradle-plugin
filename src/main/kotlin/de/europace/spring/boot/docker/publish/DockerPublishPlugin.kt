@@ -20,45 +20,53 @@ class DockerPublishPlugin : Plugin<Project> {
 
     fun dockerImageId() = "${getOrganisation(extension)}/${extension.imageName.get()}:${extension.imageTag.get()}"
 
-    val prepareBuildContext = project.tasks.register("prepareBuildContext", Copy::class.java) {
-      it.from(extension.dockerBuildContextSources)
-      it.into(extension.dockerBuildContextDir)
-    }
-
-    val copyArtifact = project.tasks.register("copyArtifact", Copy::class.java) {
-      it.dependsOn(project.tasks.getByName("bootJar"))
-      it.dependsOn(prepareBuildContext)
-      it.from(project.tasks.getByName(("bootJar")))
-      it.into(extension.dockerBuildContextDir)
-      it.rename { "application.jar" }
-    }
-
-    val buildImage = project.tasks.register("buildImage", DockerBuildTask::class.java) {
-      it.dependsOn(copyArtifact)
-      it.setBuildContextDirectory(extension.dockerBuildContextDir)
-      it.imageName = dockerImageId()
-      it.buildParams = mapOf("rm" to true, "pull" to true)
-      it.enableBuildLog = true
-
-      it.doLast {
-        project.logger.info("Image built as ${dockerImageId()}")
-      }
-    }
-
-    val rmiLocalImage = project.tasks.register("rmiLocalImage", DockerRmiTask::class.java) {
-      it.imageId = dockerImageId()
-    }
-
-    val publishImage = project.tasks.register("publishImage", DockerPushTask::class.java) {
-      it.dependsOn(buildImage)
-      it.repositoryName = dockerImageId()
-      it.finalizedBy(rmiLocalImage)
-    }
-
     project.pluginManager.apply(PublishingPlugin::class.java)
     project.pluginManager.apply(DockerPlugin::class.java)
-    project.tasks.named(PUBLISH_LIFECYCLE_TASK_NAME) {
-      it.finalizedBy(publishImage)
+
+    project.afterEvaluate {
+      val prepareBuildContext = project.tasks.register("prepareBuildContext", Copy::class.java) {
+        it.from(extension.dockerBuildContextSources)
+        it.into(extension.dockerBuildContextDir)
+      }
+
+      val buildImage = project.tasks.register("buildImage", DockerBuildTask::class.java) {
+        it.dependsOn(prepareBuildContext)
+        it.setBuildContextDirectory(extension.dockerBuildContextDir)
+        it.imageName = dockerImageId()
+        it.buildParams = mapOf("rm" to true, "pull" to true)
+        it.enableBuildLog = true
+
+        it.doLast {
+          project.logger.info("Image built as ${dockerImageId()}")
+        }
+      }
+
+      if (extension.useArtifactFromTask.get()) {
+        val artifactTask = project.tasks.getByName(extension.artifactTaskName.get())
+        val copyArtifact = project.tasks.register("copyArtifact", Copy::class.java) {
+          it.dependsOn(artifactTask)
+          it.from(artifactTask)
+          it.into(extension.dockerBuildContextDir)
+          it.rename { extension.artifactName.get() }
+        }
+        buildImage.configure {
+          it.dependsOn(copyArtifact)
+        }
+      }
+
+      val rmiLocalImage = project.tasks.register("rmiLocalImage", DockerRmiTask::class.java) {
+        it.imageId = dockerImageId()
+      }
+
+      val publishImage = project.tasks.register("publishImage", DockerPushTask::class.java) {
+        it.dependsOn(buildImage)
+        it.repositoryName = dockerImageId()
+        it.finalizedBy(rmiLocalImage)
+      }
+
+      project.tasks.named(PUBLISH_LIFECYCLE_TASK_NAME) {
+        it.finalizedBy(publishImage)
+      }
     }
   }
 
