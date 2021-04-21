@@ -28,7 +28,7 @@ class DockerPublishPluginTest : FreeSpec() {
       val project = createProject()
       project.createDockerPublishExtension()
 
-      project.pluginManager.apply("de.europace.spring-boot.docker-publish")
+      project.pluginManager.apply("de.europace.docker-publish")
 
       project.plugins.getPlugin(DockerPublishPlugin::class.java) shouldNotBe null
     }

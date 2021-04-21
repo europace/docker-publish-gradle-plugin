@@ -1,4 +1,4 @@
-# Spring-Boot Docker Publish Gradle Plugin
+# Docker Publish Gradle Plugin
 
 A Gradle plugin to build and publish a docker image to docker hub. The plugin was created to get rid of copied code in our spring-boot microservices. Therefore some of the default values are related
 to the [spring-boot-plugin](https://plugins.gradle.org/plugin/org.springframework.boot)

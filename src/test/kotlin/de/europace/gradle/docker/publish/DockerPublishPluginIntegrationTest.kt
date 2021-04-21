@@ -10,7 +10,7 @@ import org.gradle.internal.impldep.org.junit.rules.TemporaryFolder
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.UnexpectedBuildFailure
 
-const val PLUGIN_ID = "de.europace.spring-boot.docker-publish"
+const val PLUGIN_ID = "de.europace.docker-publish"
 
 class DockerPublishPluginIntegrationTest : FreeSpec() {
 
