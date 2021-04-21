@@ -1,4 +1,4 @@
-package de.europace.spring.boot.docker.publish
+package de.europace.gradle.docker.publish
 
 import javax.inject.Inject
 import org.gradle.api.Project

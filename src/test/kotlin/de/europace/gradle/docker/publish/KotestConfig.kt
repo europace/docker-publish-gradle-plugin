@@ -1,4 +1,4 @@
-package de.europace.spring.boot.docker.publish
+package de.europace.gradle.docker.publish
 
 import io.kotest.core.config.AbstractProjectConfig
 import io.kotest.core.spec.IsolationMode

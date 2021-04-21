@@ -1,4 +1,4 @@
-package de.europace.spring.boot.docker.publish
+package de.europace.gradle.docker.publish
 
 import de.gesellix.gradle.docker.DockerPlugin
 import de.gesellix.gradle.docker.tasks.DockerBuildTask

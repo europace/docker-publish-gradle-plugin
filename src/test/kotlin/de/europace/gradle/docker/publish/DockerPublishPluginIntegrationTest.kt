@@ -1,4 +1,4 @@
-package de.europace.spring.boot.docker.publish
+package de.europace.gradle.docker.publish
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
