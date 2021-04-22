@@ -1,6 +1,6 @@
 # Docker Publish Gradle Plugin
 
-A Gradle plugin to build and publish a docker image to docker hub. The plugin was created to get rid of copied code in our spring-boot microservices. Therefore some of the default values are related
+A Gradle plugin to build and publish a docker image to docker hub. The plugin was created to centralise code in our spring-boot microservices. Therefore some of the default values are related
 to the [spring-boot-plugin](https://plugins.gradle.org/plugin/org.springframework.boot)
 
 ## Usage
@@ -21,8 +21,8 @@ The configuration of the plugin is done in a block called `dockerPublish`
 
 | Name | Description           | Default Value |
 |---------------------|------------------------|------------------------|
-| organisation       | the namespace/organisation of you docker repository | mandatory
-| imageName       | the name of you docker repository | project.name
+| organisation       | the namespace/organisation of the target docker repository | mandatory
+| imageName       | the name of your docker repository | project.name
 | imageTag       | the tag of your docker image | project.version
 | useArtifactFromTask       | Flag if your docker image relates on output from a task | true
 | artifactTaskName       | the name of the task the docker image depends on | "bootJar"
