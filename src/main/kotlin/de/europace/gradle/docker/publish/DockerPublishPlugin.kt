@@ -16,6 +16,7 @@ const val EXTENSION_NAME = "dockerPublish"
 class DockerPublishPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
+    val dockerBuildContextDir = "${project.buildDir.path}/docker"
     val extension = project.extensions.findByName(EXTENSION_NAME) as? DockerPublishExtension ?: project.extensions.create(EXTENSION_NAME, DockerPublishExtension::class.java, project)
 
     fun dockerImageId() = "${getOrganisation(extension)}/${extension.imageName.get()}:${extension.imageTag.get()}"
@@ -26,31 +27,27 @@ class DockerPublishPlugin : Plugin<Project> {
     project.afterEvaluate {
       val prepareBuildContext = project.tasks.register("prepareBuildContext", Copy::class.java) {
         it.from(extension.dockerBuildContextSources)
-        it.into(extension.dockerBuildContextDir)
+        it.into(dockerBuildContextDir)
+      }
+
+      val artifactTask = project.tasks.getByName(extension.artifactTaskName.get())
+      val copyArtifact = project.tasks.register("copyArtifact", Copy::class.java) {
+        it.dependsOn(artifactTask)
+        it.from(artifactTask)
+        it.into(dockerBuildContextDir)
+        it.rename { extension.artifactName.get() }
       }
 
       val buildImage = project.tasks.register("buildImage", DockerBuildTask::class.java) {
+        it.dependsOn(copyArtifact)
         it.dependsOn(prepareBuildContext)
-        it.setBuildContextDirectory(extension.dockerBuildContextDir)
+        it.setBuildContextDirectory(dockerBuildContextDir)
         it.imageName = dockerImageId()
         it.buildParams = mapOf("rm" to true, "pull" to true)
         it.enableBuildLog = true
 
         it.doLast {
           project.logger.info("Image built as ${dockerImageId()}")
-        }
-      }
-
-      if (extension.useArtifactFromTask.get()) {
-        val artifactTask = project.tasks.getByName(extension.artifactTaskName.get())
-        val copyArtifact = project.tasks.register("copyArtifact", Copy::class.java) {
-          it.dependsOn(artifactTask)
-          it.from(artifactTask)
-          it.into(extension.dockerBuildContextDir)
-          it.rename { extension.artifactName.get() }
-        }
-        buildImage.configure {
-          it.dependsOn(copyArtifact)
         }
       }
 

@@ -128,34 +128,5 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
       exception.message shouldContain expectedOutput
       exception.message shouldContain "BUILD FAILED"
     }
-
-    "publishImage should not include copyArtifact task useArtifactFromTask is set to false" {
-      buildFile.writeText(
-        """
-        plugins {
-            id("$PLUGIN_ID")
-        }
-
-        dockerPublish {
-          organisation.set("foo")
-          useArtifactFromTask.set(false)
-        }"""
-      )
-
-      val result = GradleRunner.create()
-        .withProjectDir(testProjectDir.root)
-        .withPluginClasspath()
-        .withArguments("publishImage", "--dry-run")
-        .forwardOutput()
-        .build()
-
-      val expectedOutput = """:prepareBuildContext SKIPPED
-:buildImage SKIPPED
-:publishImage SKIPPED
-:rmiLocalImage SKIPPED
-"""
-      result.output shouldStartWith expectedOutput
-      result.output shouldContain "BUILD SUCCESSFUL"
-    }
   }
 }

@@ -4,14 +4,12 @@ import de.gesellix.gradle.docker.DockerPlugin
 import de.gesellix.gradle.docker.tasks.DockerBuildTask
 import de.gesellix.gradle.docker.tasks.DockerPushTask
 import de.gesellix.gradle.docker.tasks.DockerRmiTask
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.shouldEndWith
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
-import org.gradle.api.UnknownTaskException
 import org.gradle.api.internal.project.ProjectInternal
 import org.gradle.api.internal.tasks.DefaultTaskDependency
 import org.gradle.api.publish.plugins.PublishingPlugin
@@ -66,18 +64,6 @@ class DockerPublishPluginTest : FreeSpec() {
 
         (project.tasks.getByName("prepareBuildContext") as Copy).destinationDir.path shouldEndWith "/docker"
       }
-
-      "should use defined destinationDir" {
-        val expectedDir = "someDir"
-        val project = createProject().withArtifactTask()
-        val extension = project.createDockerPublishExtension()
-        extension.dockerBuildContextDir.value(expectedDir)
-
-        project.pluginManager.apply(DockerPublishPlugin::class.java)
-        project.evaluate()
-
-        (project.tasks.getByName("prepareBuildContext") as Copy).destinationDir.path shouldEndWith expectedDir
-      }
     }
 
     "copyArtifact" - {
@@ -93,19 +79,6 @@ class DockerPublishPluginTest : FreeSpec() {
         task.destinationDir.path shouldEndWith "/docker"
       }
 
-      "should use defined destinationDir" {
-        val expectedDir = "someDir"
-        val project = createProject().withArtifactTask()
-        val extension = project.createDockerPublishExtension()
-        extension.dockerBuildContextDir.value(expectedDir)
-
-        project.pluginManager.apply(DockerPublishPlugin::class.java)
-        project.evaluate()
-
-        val task = project.tasks.getByName("copyArtifact") as Copy
-        task.dependsOn.any { (it as? DefaultTask)?.name == "bootJar" } shouldBe true
-      }
-
       "should use defined artifactTask" {
         val expectedName = "someName"
         val project = createProject()
@@ -118,19 +91,6 @@ class DockerPublishPluginTest : FreeSpec() {
 
         val task = project.tasks.getByName("copyArtifact") as Copy
         task.dependsOn.any { (it as? DefaultTask)?.name == expectedName } shouldBe true
-      }
-
-      "should not create task if useArtifactFromTask=false" {
-        val project = createProject()
-        val extension = project.createDockerPublishExtension()
-        extension.useArtifactFromTask.value(false)
-
-        project.pluginManager.apply(DockerPublishPlugin::class.java)
-        project.evaluate()
-
-        shouldThrow<UnknownTaskException> {
-          project.tasks.getByName("copyArtifact")
-        }
       }
     }
 
@@ -151,13 +111,11 @@ class DockerPublishPluginTest : FreeSpec() {
         task.enableBuildLog shouldBe true
       }
 
-      "should set correct defined values"{
-        val expectedDir = "expectedDir"
+      "should set correct defined values" {
         val expectedName = "expectedName"
         val expectedTag = "expectedTag"
         val project = createProject().withArtifactTask()
         val extension = project.createDockerPublishExtension("expectedOrganisation")
-        extension.dockerBuildContextDir.value(expectedDir)
         extension.imageTag.value(expectedTag)
         extension.imageName.value(expectedName)
 
@@ -165,7 +123,6 @@ class DockerPublishPluginTest : FreeSpec() {
         project.evaluate()
 
         val task = (project.tasks.getByName("buildImage") as DockerBuildTask)
-        task.buildContextDirectory.path shouldEndWith expectedDir
         task.imageName shouldBe "expectedOrganisation/$expectedName:$expectedTag"
       }
     }
@@ -183,12 +140,10 @@ class DockerPublishPluginTest : FreeSpec() {
       }
 
       "should set correct defined values"{
-        val expectedDir = "expectedDir"
         val expectedName = "expectedName"
         val expectedTag = "expectedTag"
         val project = createProject().withArtifactTask()
         val extension = project.createDockerPublishExtension("expectedOrganisation")
-        extension.dockerBuildContextDir.value(expectedDir)
         extension.imageTag.value(expectedTag)
         extension.imageName.value(expectedName)
 
@@ -215,12 +170,10 @@ class DockerPublishPluginTest : FreeSpec() {
       }
 
       "should set correct defined values"{
-        val expectedDir = "expectedDir"
         val expectedName = "expectedName"
         val expectedTag = "expectedTag"
         val project = createProject().withArtifactTask()
         val extension = project.createDockerPublishExtension("expectedOrganisation")
-        extension.dockerBuildContextDir.value(expectedDir)
         extension.imageTag.value(expectedTag)
         extension.imageName.value(expectedName)
 
