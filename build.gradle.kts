@@ -83,16 +83,16 @@ allprojects {
 pluginBundle {
   website = "https://github.com/europace/docker-publish-gradle-plugin"
   vcsUrl = "https://github.com/europace/docker-publish-gradle-plugin"
-  tags = listOf("docker", "spring-boot", "publish", "publishing")
+  tags = listOf("docker", "publish", "publishing")
 }
 
 gradlePlugin {
   plugins {
     create("dockerPublishPlugin") {
-      id = "de.europace.spring-boot.docker-publish"
-      displayName = "Plugin to build and publish docker images of spring-boot services"
-      description = "Adds tasks to create and publish a docker image from a sping-boot jar file"
-      implementationClass = "de.europace.spring.boot.docker.publish.DockerPublishPlugin"
+      id = "de.europace.docker-publish"
+      displayName = "Docker Publish Plugin"
+      description = "Adds tasks to create and publish a docker image to docker hub"
+      implementationClass = "de.europace.gradle.docker.publish.DockerPublishPlugin"
     }
   }
 }

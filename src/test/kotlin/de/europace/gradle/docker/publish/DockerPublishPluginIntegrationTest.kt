@@ -1,4 +1,4 @@
-package de.europace.spring.boot.docker.publish
+package de.europace.gradle.docker.publish
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
@@ -10,7 +10,7 @@ import org.gradle.internal.impldep.org.junit.rules.TemporaryFolder
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.UnexpectedBuildFailure
 
-const val PLUGIN_ID = "de.europace.spring-boot.docker-publish"
+const val PLUGIN_ID = "de.europace.docker-publish"
 
 class DockerPublishPluginIntegrationTest : FreeSpec() {
 
@@ -28,7 +28,7 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
       buildFile = testProjectDir.newFile("build.gradle.kts")
     }
 
-    "buildImage should have tasks in right order" {
+    "publishImage should have tasks in right order" {
       buildFile.writeText(
         """
         plugins {
@@ -57,8 +57,8 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
         .build()
 
       val expectedOutput = """:bootJar SKIPPED
-:prepareBuildContext SKIPPED
 :copyArtifact SKIPPED
+:prepareBuildContext SKIPPED
 :buildImage SKIPPED
 :publishImage SKIPPED
 :rmiLocalImage SKIPPED
@@ -67,7 +67,7 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
       result.output shouldContain "BUILD SUCCESSFUL"
     }
 
-    "buildImage should fail if no organisation is set" {
+    "publishImage should fail if no organisation is set" {
       buildFile.writeText(
         """
         plugins {
@@ -101,7 +101,7 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
       exception.message shouldContain "BUILD FAILED"
     }
 
-    "buildImage should fail if no bootJar task is available" {
+    "publishImage should fail if no bootJar task is available" {
       buildFile.writeText(
         """
         plugins {
@@ -123,9 +123,7 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
           .build()
 
       }
-      val expectedOutput = """Could not determine the dependencies of task ':buildImage'.
-> Could not create task ':copyArtifact'.
-   > Task with name 'bootJar' not found in root project """
+      val expectedOutput = "> Task with name 'bootJar' not found in root project"
 
       exception.message shouldContain expectedOutput
       exception.message shouldContain "BUILD FAILED"
