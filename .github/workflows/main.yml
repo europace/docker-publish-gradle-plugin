@@ -21,11 +21,11 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           report_paths: '**/build/test-results/test/TEST-*.xml'
-#      - name: Publish to Gradle Plugin Portal
-#        if: github.event_name == 'push' && github.event.ref == 'refs/heads/main'
-#        # According to https://github.com/gradle/gradle/issues/1295 we cannot pass parameters containing dots via environment,
-#        # so we declare them explicitly as project parameters.
-#        run: ./gradlew publishPlugin --info --stacktrace -Pgradle.publish.key="$GRADLE_PUBLISH_KEY" -Pgradle.publish.secret="$GRADLE_PUBLISH_SECRET"
-#        env:
-#          GRADLE_PUBLISH_KEY: ${{ secrets.GRADLE_PUBLISH_KEY }}
-#          GRADLE_PUBLISH_SECRET: ${{ secrets.GRADLE_PUBLISH_SECRET }}
+      - name: Publish to Gradle Plugin Portal
+        if: github.event_name == 'push' && github.event.ref == 'refs/heads/main'
+        # According to https://github.com/gradle/gradle/issues/1295 we cannot pass parameters containing dots via environment,
+        # so we declare them explicitly as project parameters.
+        run: ./gradlew publishPlugin --info --stacktrace -Pgradle.publish.key="$GRADLE_PUBLISH_KEY" -Pgradle.publish.secret="$GRADLE_PUBLISH_SECRET"
+        env:
+          GRADLE_PUBLISH_KEY: ${{ secrets.GRADLE_PUBLISH_KEY }}
+          GRADLE_PUBLISH_SECRET: ${{ secrets.GRADLE_PUBLISH_SECRET }}
