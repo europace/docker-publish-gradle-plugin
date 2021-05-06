@@ -14,7 +14,7 @@ val mockkVersion = "1.11.0"
 plugins {
   `maven-publish`
   `java-gradle-plugin`
-  kotlin("jvm") version "1.4.32"
+  kotlin("jvm") version "1.5.0"
   id("com.gradle.plugin-publish") version "0.14.0"
 }
 
