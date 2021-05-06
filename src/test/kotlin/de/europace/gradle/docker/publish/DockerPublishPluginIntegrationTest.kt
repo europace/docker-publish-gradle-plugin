@@ -92,7 +92,6 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
           .withArguments("publishImage", "--dry-run")
           .forwardOutput()
           .build()
-
       }
       val expectedOutput = """> Could not create task ':publishImage'.
    > organisation must be set"""
@@ -121,7 +120,6 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
           .withArguments("publishImage", "--dry-run")
           .forwardOutput()
           .build()
-
       }
       val expectedOutput = "> Task with name 'bootJar' not found in root project"
 

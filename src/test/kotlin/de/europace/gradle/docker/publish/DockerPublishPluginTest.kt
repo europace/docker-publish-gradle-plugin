@@ -51,7 +51,6 @@ class DockerPublishPluginTest : FreeSpec() {
 
       val task = (project.tasks.getByName(PUBLISH_LIFECYCLE_TASK_NAME) as DefaultTask)
       task.finalizedByElement().name shouldBe "publishImage"
-
     }
 
     "prepareBuildContext" - {
@@ -95,7 +94,7 @@ class DockerPublishPluginTest : FreeSpec() {
     }
 
     "buildImage" - {
-      "should set correct default values"{
+      "should set correct default values" {
         val project = createProject().withArtifactTask()
         project.createDockerPublishExtension()
 
@@ -128,7 +127,7 @@ class DockerPublishPluginTest : FreeSpec() {
     }
 
     "rmiLocalImage" - {
-      "should set correct default values"{
+      "should set correct default values" {
         val project = createProject().withArtifactTask()
         project.createDockerPublishExtension()
 
@@ -139,7 +138,7 @@ class DockerPublishPluginTest : FreeSpec() {
         task.imageId shouldBe "someOrganisation/${project.name}:${project.version}"
       }
 
-      "should set correct defined values"{
+      "should set correct defined values" {
         val expectedName = "expectedName"
         val expectedTag = "expectedTag"
         val project = createProject().withArtifactTask()
@@ -156,7 +155,7 @@ class DockerPublishPluginTest : FreeSpec() {
     }
 
     "publishImage" - {
-      "should set correct default values"{
+      "should set correct default values" {
         val project = createProject().withArtifactTask()
         project.createDockerPublishExtension()
 
@@ -169,7 +168,7 @@ class DockerPublishPluginTest : FreeSpec() {
         task.repositoryName shouldBe "someOrganisation/${project.name}:${project.version}"
       }
 
-      "should set correct defined values"{
+      "should set correct defined values" {
         val expectedName = "expectedName"
         val expectedTag = "expectedTag"
         val project = createProject().withArtifactTask()
