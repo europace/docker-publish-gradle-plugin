@@ -166,6 +166,7 @@ class DockerPublishPluginTest : FreeSpec() {
         task.dependsOn.any { (it as? TaskProvider<*>)?.name == "buildImage" } shouldBe true
         task.finalizedByElement().name shouldBe "rmiLocalImage"
         task.repositoryName.get() shouldBe "someOrganisation/${project.name}:${project.version}"
+        task.authConfig.get() shouldNotBe null
       }
 
       "should set correct defined values" {
