@@ -51,7 +51,6 @@ class DockerPublishPluginTest : FreeSpec() {
 
       val task = (project.tasks.getByName(PUBLISH_LIFECYCLE_TASK_NAME) as DefaultTask)
       task.finalizedByElement().name shouldBe "publishImage"
-
     }
 
     "prepareBuildContext" - {
@@ -95,7 +94,7 @@ class DockerPublishPluginTest : FreeSpec() {
     }
 
     "buildImage" - {
-      "should set correct default values"{
+      "should set correct default values" {
         val project = createProject().withArtifactTask()
         project.createDockerPublishExtension()
 
@@ -105,10 +104,38 @@ class DockerPublishPluginTest : FreeSpec() {
         val task = (project.tasks.getByName("buildImage") as DockerBuildTask)
         task.dependsOn.any { (it as? TaskProvider<*>)?.name == "copyArtifact" } shouldBe true
         task.dependsOn.any { (it as? TaskProvider<*>)?.name == "prepareBuildContext" } shouldBe true
-        task.buildContextDirectory.path shouldEndWith "/docker"
-        task.imageName shouldBe "someOrganisation/${project.name}:${project.version}"
-        task.buildParams shouldBe mapOf("rm" to true, "pull" to true)
-        task.enableBuildLog shouldBe true
+        task.buildContextDirectory.asFile.get().path shouldEndWith "/docker"
+        task.imageName.get() shouldBe "someOrganisation/${project.name}:${project.version}"
+        task.buildParams.get() shouldBe mapOf("rm" to true, "pull" to true)
+        task.enableBuildLog.get() shouldBe true
+      }
+
+      "should set correct defined values" {
+        val expectedName = "expectedName"
+        val expectedTag = "expectedTag"
+        val project = createProject().withArtifactTask()
+        val extension = project.createDockerPublishExtension("expectedOrganisation")
+        extension.imageTag.set(expectedTag)
+        extension.imageName.set(expectedName)
+
+        project.pluginManager.apply(DockerPublishPlugin::class.java)
+        project.evaluate()
+
+        val task = (project.tasks.getByName("buildImage") as DockerBuildTask)
+        task.imageName.get() shouldBe "expectedOrganisation/$expectedName:$expectedTag"
+      }
+    }
+
+    "rmiLocalImage" - {
+      "should set correct default values" {
+        val project = createProject().withArtifactTask()
+        project.createDockerPublishExtension()
+
+        project.pluginManager.apply(DockerPublishPlugin::class.java)
+        project.evaluate()
+
+        val task = (project.tasks.getByName("rmiLocalImage") as DockerRmiTask)
+        task.imageId.get() shouldBe "someOrganisation/${project.name}:${project.version}"
       }
 
       "should set correct defined values" {
@@ -122,41 +149,13 @@ class DockerPublishPluginTest : FreeSpec() {
         project.pluginManager.apply(DockerPublishPlugin::class.java)
         project.evaluate()
 
-        val task = (project.tasks.getByName("buildImage") as DockerBuildTask)
-        task.imageName shouldBe "expectedOrganisation/$expectedName:$expectedTag"
-      }
-    }
-
-    "rmiLocalImage" - {
-      "should set correct default values"{
-        val project = createProject().withArtifactTask()
-        project.createDockerPublishExtension()
-
-        project.pluginManager.apply(DockerPublishPlugin::class.java)
-        project.evaluate()
-
         val task = (project.tasks.getByName("rmiLocalImage") as DockerRmiTask)
-        task.imageId shouldBe "someOrganisation/${project.name}:${project.version}"
-      }
-
-      "should set correct defined values"{
-        val expectedName = "expectedName"
-        val expectedTag = "expectedTag"
-        val project = createProject().withArtifactTask()
-        val extension = project.createDockerPublishExtension("expectedOrganisation")
-        extension.imageTag.value(expectedTag)
-        extension.imageName.value(expectedName)
-
-        project.pluginManager.apply(DockerPublishPlugin::class.java)
-        project.evaluate()
-
-        val task = (project.tasks.getByName("rmiLocalImage") as DockerRmiTask)
-        task.imageId shouldBe "expectedOrganisation/$expectedName:$expectedTag"
+        task.imageId.get() shouldBe "expectedOrganisation/$expectedName:$expectedTag"
       }
     }
 
     "publishImage" - {
-      "should set correct default values"{
+      "should set correct default values" {
         val project = createProject().withArtifactTask()
         project.createDockerPublishExtension()
 
@@ -166,22 +165,22 @@ class DockerPublishPluginTest : FreeSpec() {
         val task = (project.tasks.getByName("publishImage") as DockerPushTask)
         task.dependsOn.any { (it as? TaskProvider<*>)?.name == "buildImage" } shouldBe true
         task.finalizedByElement().name shouldBe "rmiLocalImage"
-        task.repositoryName shouldBe "someOrganisation/${project.name}:${project.version}"
+        task.repositoryName.get() shouldBe "someOrganisation/${project.name}:${project.version}"
       }
 
-      "should set correct defined values"{
+      "should set correct defined values" {
         val expectedName = "expectedName"
         val expectedTag = "expectedTag"
         val project = createProject().withArtifactTask()
         val extension = project.createDockerPublishExtension("expectedOrganisation")
-        extension.imageTag.value(expectedTag)
-        extension.imageName.value(expectedName)
+        extension.imageTag.set(expectedTag)
+        extension.imageName.set(expectedName)
 
         project.pluginManager.apply(DockerPublishPlugin::class.java)
         project.evaluate()
 
         val task = (project.tasks.getByName("publishImage") as DockerPushTask)
-        task.repositoryName shouldBe "expectedOrganisation/$expectedName:$expectedTag"
+        task.repositoryName.get() shouldBe "expectedOrganisation/$expectedName:$expectedTag"
       }
     }
   }
@@ -194,9 +193,9 @@ class DockerPublishPluginTest : FreeSpec() {
   }
 
   private fun Project.createDockerPublishExtension(organisation: String = "someOrganisation"): DockerPublishExtension =
-    project.extensions.create("dockerPublish", DockerPublishExtension::class.java, this).apply {
-      this.organisation.value(organisation)
-    }
+      project.extensions.create("dockerPublish", DockerPublishExtension::class.java, this).apply {
+        this.organisation.set(organisation)
+      }
 
   private fun DefaultTask.finalizedByElement() = (this.finalizedBy as DefaultTaskDependency).mutableValues.elementAt(0) as TaskProvider<*>
 }

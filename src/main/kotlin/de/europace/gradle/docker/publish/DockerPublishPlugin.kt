@@ -4,6 +4,7 @@ import de.gesellix.gradle.docker.DockerPlugin
 import de.gesellix.gradle.docker.tasks.DockerBuildTask
 import de.gesellix.gradle.docker.tasks.DockerPushTask
 import de.gesellix.gradle.docker.tasks.DockerRmiTask
+import java.io.File
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -16,7 +17,7 @@ const val EXTENSION_NAME = "dockerPublish"
 class DockerPublishPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
-    val dockerBuildContextDir = "${project.buildDir.path}/docker"
+    val dockerBuildContextDir = File("${project.buildDir.path}/docker")
     val extension = project.extensions.findByName(EXTENSION_NAME) as? DockerPublishExtension ?: project.extensions.create(EXTENSION_NAME, DockerPublishExtension::class.java, project)
 
     fun dockerImageId() = "${getOrganisation(extension)}/${extension.imageName.get()}:${extension.imageTag.get()}"
@@ -41,10 +42,10 @@ class DockerPublishPlugin : Plugin<Project> {
       val buildImage = project.tasks.register("buildImage", DockerBuildTask::class.java) {
         it.dependsOn(copyArtifact)
         it.dependsOn(prepareBuildContext)
-        it.setBuildContextDirectory(dockerBuildContextDir)
-        it.imageName = dockerImageId()
-        it.buildParams = mapOf("rm" to true, "pull" to true)
-        it.enableBuildLog = true
+        it.buildContextDirectory.set(dockerBuildContextDir)
+        it.imageName.set(dockerImageId())
+        it.buildParams.set(mapOf("rm" to true, "pull" to true))
+        it.enableBuildLog.set(true)
 
         it.doLast {
           project.logger.info("Image built as ${dockerImageId()}")
@@ -52,12 +53,12 @@ class DockerPublishPlugin : Plugin<Project> {
       }
 
       val rmiLocalImage = project.tasks.register("rmiLocalImage", DockerRmiTask::class.java) {
-        it.imageId = dockerImageId()
+        it.imageId.set(dockerImageId())
       }
 
       val publishImage = project.tasks.register("publishImage", DockerPushTask::class.java) {
         it.dependsOn(buildImage)
-        it.repositoryName = dockerImageId()
+        it.repositoryName.set(dockerImageId())
         it.finalizedBy(rmiLocalImage)
       }
 
