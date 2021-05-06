@@ -60,6 +60,7 @@ class DockerPublishPlugin : Plugin<Project> {
         it.dependsOn(buildImage)
         it.repositoryName.set(dockerImageId())
         it.finalizedBy(rmiLocalImage)
+        it.authConfig.set(it.dockerClient.readDefaultAuthConfig())
       }
 
       project.tasks.named(PUBLISH_LIFECYCLE_TASK_NAME) {
