@@ -10,6 +10,7 @@ ij_continuation_indent_size = 4
 ij_smart_tabs = false
 ij_visual_guides = none
 ij_wrap_on_typing = false
+disabled_rules = indent,parameter-list-wrapping,keyword-spacing
 
 [.editorconfig]
 ij_editorconfig_align_group_field_declarations = false
