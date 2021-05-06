@@ -8,13 +8,13 @@ buildscript {
   }
 }
 val javaVersion = JavaVersion.VERSION_1_8
-val kotestVersion = "4.4.3"
+val kotestVersion = "4.5.0"
 val mockkVersion = "1.11.0"
 
 plugins {
   `maven-publish`
   `java-gradle-plugin`
-  kotlin("jvm") version "1.4.32"
+  kotlin("jvm") version "1.5.0"
   id("com.gradle.plugin-publish") version "0.14.0"
 }
 
@@ -28,8 +28,8 @@ val dependencyVersions = listOf(
     "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
 )
 
-val dependencyVersionsByGroup = mapOf<String, String>(
-  "org.jetbrains.kotlin" to "1.4.32"
+val dependencyVersionsByGroup = mapOf(
+  "org.jetbrains.kotlin" to "1.5.0"
 )
 
 java {
