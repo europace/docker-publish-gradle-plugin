@@ -17,9 +17,8 @@ The plugin is available on the official [Gradle plugin portal](https://plugins.g
 
 ## Defaults
 
-* As there is a publishImage task automatically hooked up into the publishing cycle, the plugin `maven-publish` is
-applied within this plugin.
-* As we currently just have docker images in docker hub, this plugin automatically sets the credentials to be able to publish there.
+* The `publishImage` task is configured to run after Gradle's `publish` task, so this plugin implicitly applies the `maven-publish` plugin.
+* Authentication to the default registry (Docker Hub) is enabled by default.
 
 ### Configuration
 
