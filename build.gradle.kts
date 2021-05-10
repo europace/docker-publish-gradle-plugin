@@ -1,6 +1,3 @@
-import java.time.LocalDateTime.now
-import java.time.format.DateTimeFormatter.ofPattern
-
 buildscript {
   repositories {
     mavenCentral()
@@ -19,7 +16,6 @@ plugins {
 }
 
 group = "de.europace.gradle"
-version = now().format(ofPattern("yyyy-MM-dd\'T\'HH-mm-ss"))
 logger.lifecycle("version: $version")
 
 val dependencyVersions = listOf(
@@ -29,7 +25,7 @@ val dependencyVersions = listOf(
 )
 
 val dependencyVersionsByGroup = mapOf(
-  "org.jetbrains.kotlin" to "1.5.0"
+    "org.jetbrains.kotlin" to "1.5.0"
 )
 
 java {
