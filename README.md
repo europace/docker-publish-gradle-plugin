@@ -37,6 +37,11 @@ The configuration of the plugin is done in a block called `dockerPublish`
 
 Please submit issues if you have any questions or suggestions regarding this plugin. Code changes like bug fixes or new features can be proposed as pull requests.
 
-## Publishing
+## Releasing
 
-Publishing requires username and API key from the project owner. Please see [the docs](https://plugins.gradle.org/docs/submit) for details.
+There are a few steps to release a plugin version:
+
+1. create a pull request and merge it
+   --> The `draft-release.yml` will draft a release for you or add the pull request to an already existing draft release
+1. Choose version, keep the pattern of the [semantig versioning](https://semver.org/) in mind. Adapt tag appropriately (eg. `v1.0.0`)   
+1. Once you click on "publish release" a `publish-release.yml` will create an artifact using the tag as version (eg. `v1.0.0`-> `1.0.0`) and will publish it to the Gradle plugin portal.
