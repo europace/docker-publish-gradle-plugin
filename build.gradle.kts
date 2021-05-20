@@ -22,7 +22,7 @@ val dependencyVersions = listOf(
     "com.squareup.okio:okio:2.10.0",
     "io.mockk:mockk:$mockkVersion",
     "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0",
-    "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.5.0"
+    "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.5.0-native-mt"
 )
 
 val dependencyVersionsByGroup = mapOf(
