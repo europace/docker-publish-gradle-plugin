@@ -5,7 +5,7 @@ buildscript {
   }
 }
 val javaVersion = JavaVersion.VERSION_1_8
-val kotestVersion = "4.6.0"
+val kotestVersion = "4.6.1"
 val mockkVersion = "1.12.0"
 
 plugins {
