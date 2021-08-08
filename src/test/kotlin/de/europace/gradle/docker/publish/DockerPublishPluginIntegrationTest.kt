@@ -2,11 +2,10 @@ package de.europace.gradle.docker.publish
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
+import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldStartWith
 import java.io.File
-import org.gradle.internal.impldep.org.junit.Rule
-import org.gradle.internal.impldep.org.junit.rules.TemporaryFolder
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.UnexpectedBuildFailure
 
@@ -14,23 +13,19 @@ const val PLUGIN_ID = "de.europace.docker-publish"
 
 class DockerPublishPluginIntegrationTest : FreeSpec() {
 
-  @Rule
-  private val testProjectDir = TemporaryFolder()
+  private val testProjectDir = tempdir()
+
   private lateinit var buildFile: File
 
   init {
 
-    beforeSpec {
-      testProjectDir.create()
-    }
-
     beforeTest {
-      buildFile = testProjectDir.newFile("build.gradle.kts")
+      buildFile = File(testProjectDir, "build.gradle.kts")
     }
 
     "publishImage should have tasks in right order" {
       buildFile.writeText(
-        """
+          """
         plugins {
             id("$PLUGIN_ID")
         }
@@ -50,11 +45,11 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
       )
 
       val result = GradleRunner.create()
-        .withProjectDir(testProjectDir.root)
-        .withPluginClasspath()
-        .withArguments("publishImage", "--dry-run")
-        .forwardOutput()
-        .build()
+          .withProjectDir(testProjectDir)
+          .withPluginClasspath()
+          .withArguments("publishImage", "--dry-run")
+          .forwardOutput()
+          .build()
 
       val expectedOutput = """:bootJar SKIPPED
 :copyArtifact SKIPPED
@@ -69,7 +64,7 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
 
     "publishImage should fail if no organisation is set" {
       buildFile.writeText(
-        """
+          """
         plugins {
             id("$PLUGIN_ID")
         }
@@ -87,11 +82,11 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
       val exception = shouldThrow<UnexpectedBuildFailure> {
 
         GradleRunner.create()
-          .withProjectDir(testProjectDir.root)
-          .withPluginClasspath()
-          .withArguments("publishImage", "--dry-run")
-          .forwardOutput()
-          .build()
+            .withProjectDir(testProjectDir)
+            .withPluginClasspath()
+            .withArguments("publishImage", "--dry-run")
+            .forwardOutput()
+            .build()
       }
       val expectedOutput = """> Could not create task ':publishImage'.
    > organisation must be set"""
@@ -102,7 +97,7 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
 
     "publishImage should fail if no bootJar task is available" {
       buildFile.writeText(
-        """
+          """
         plugins {
             id("$PLUGIN_ID")
         }
@@ -115,11 +110,11 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
       val exception = shouldThrow<UnexpectedBuildFailure> {
 
         GradleRunner.create()
-          .withProjectDir(testProjectDir.root)
-          .withPluginClasspath()
-          .withArguments("publishImage", "--dry-run")
-          .forwardOutput()
-          .build()
+            .withProjectDir(testProjectDir)
+            .withPluginClasspath()
+            .withArguments("publishImage", "--dry-run")
+            .forwardOutput()
+            .build()
       }
       val expectedOutput = "> Task with name 'bootJar' not found in root project"
 
