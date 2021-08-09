@@ -52,7 +52,7 @@ repositories {
 
 dependencies {
   implementation(gradleApi())
-  implementation("de.gesellix:gradle-docker-plugin:2021-05-05T22-41-13")
+  implementation("de.gesellix:gradle-docker-plugin:2021-08-08T19-57-00")
 
   testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion")
   testImplementation("io.kotest:kotest-framework-engine-jvm:$kotestVersion")
