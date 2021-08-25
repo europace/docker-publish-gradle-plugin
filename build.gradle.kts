@@ -26,7 +26,7 @@ val dependencyVersions = listOf(
 )
 
 val dependencyVersionsByGroup = mapOf(
-    "org.jetbrains.kotlin" to "1.5.21" // remember to update in plugin section as well
+    "org.jetbrains.kotlin" to "1.5.30" // remember to update in plugin section as well
 )
 
 java {
