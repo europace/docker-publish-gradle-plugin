@@ -12,7 +12,7 @@ plugins {
   `maven-publish`
   `java-gradle-plugin`
   kotlin("jvm") version "1.5.30" // remember to update in dependencyVersionsByGroup
-  id("com.gradle.plugin-publish") version "0.15.0"
+  id("com.gradle.plugin-publish") version "0.16.0"
 }
 
 group = "de.europace.gradle"
