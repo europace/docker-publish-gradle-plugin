@@ -19,7 +19,7 @@ group = "de.europace.gradle"
 logger.lifecycle("version: $version")
 
 val dependencyVersions = listOf(
-    "com.squareup.okio:okio:2.10.0",
+    "com.squareup.okio:okio:3.0.0",
     "io.mockk:mockk:$mockkVersion",
     "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2",
     "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.5.2"
