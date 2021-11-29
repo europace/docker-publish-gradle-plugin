@@ -21,9 +21,7 @@ logger.lifecycle("version: $version")
 
 val dependencyVersions = listOf(
     "com.squareup.okio:okio:3.0.0",
-    "io.mockk:mockk:$mockkVersion",
-//    "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2",
-//    "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.5.2"
+    "io.mockk:mockk:$mockkVersion"
 )
 
 val dependencyVersionsByGroup = mapOf(
