@@ -6,7 +6,7 @@ buildscript {
 }
 val javaVersion = JavaVersion.VERSION_1_8
 val kotestVersion = "4.6.4"
-val kotlinVersion = "1.6.0"
+val kotlinVersion = "1.6.10" // remember to update in plugins
 val mockkVersion = "1.12.1"
 
 plugins {
@@ -25,7 +25,7 @@ val dependencyVersions = listOf(
 )
 
 val dependencyVersionsByGroup = mapOf(
-    "org.jetbrains.kotlin" to kotlinVersion // remember to update in plugin section as well
+    "org.jetbrains.kotlin" to kotlinVersion
 )
 
 java {
