@@ -87,7 +87,7 @@ gradlePlugin {
     create("dockerPublishPlugin") {
       id = "de.europace.docker-publish"
       displayName = "Docker Publish Plugin"
-      description = "Adds tasks to create and publish a docker image to docker hub"
+      description = "Adds tasks to create and publish a Docker image to a registry"
       implementationClass = "de.europace.gradle.docker.publish.DockerPublishPlugin"
     }
   }
