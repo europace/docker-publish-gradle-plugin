@@ -110,6 +110,19 @@ class DockerPublishPluginTest : FreeSpec() {
         task.enableBuildLog.get() shouldBe true
       }
 
+      "should evaluate the project version lazily" {
+        val project = createProject().withArtifactTask()
+        project.createDockerPublishExtension()
+
+        project.version = "version-before-evaluate"
+        project.pluginManager.apply(DockerPublishPlugin::class.java)
+        project.evaluate()
+        project.version = "version-after-evaluate"
+
+        val task = (project.tasks.getByName("buildImage") as DockerBuildTask)
+        task.imageName.get() shouldBe "someOrganisation/${project.name}:version-after-evaluate"
+      }
+
       "should set correct defined values" {
         val expectedName = "expectedName"
         val expectedTag = "expectedTag"

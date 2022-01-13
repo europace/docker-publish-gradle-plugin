@@ -26,22 +26,22 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
     "publishImage should have tasks in right order" {
       buildFile.writeText(
           """
-        plugins {
+          plugins {
             id("$PLUGIN_ID")
-        }
-        
-        dockerPublish {
-          organisation.set("foo")
-        }
-        
-        tasks {
-          create("bootJar") {
-            doFirst{
-                 logger.lifecycle("Would now create jar file")
+          }
+          
+          dockerPublish {
+            organisation.set("foo")
+          }
+          
+          tasks {
+            create("bootJar") {
+              doFirst {
+                logger.lifecycle("Would now create jar file")
+              }
             }
           }
-        }
-    """
+          """.trimIndent()
       )
 
       val result = GradleRunner.create()
@@ -51,13 +51,14 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
           .forwardOutput()
           .build()
 
-      val expectedOutput = """:bootJar SKIPPED
-:copyArtifact SKIPPED
-:prepareBuildContext SKIPPED
-:buildImage SKIPPED
-:publishImage SKIPPED
-:rmiLocalImage SKIPPED
-"""
+      val expectedOutput = """
+        :bootJar SKIPPED
+        :copyArtifact SKIPPED
+        :prepareBuildContext SKIPPED
+        :buildImage SKIPPED
+        :publishImage SKIPPED
+        :rmiLocalImage SKIPPED
+        """.trimIndent()
       result.output shouldStartWith expectedOutput
       result.output shouldContain "BUILD SUCCESSFUL"
     }
@@ -65,18 +66,18 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
     "publishImage should fail if no organisation is set" {
       buildFile.writeText(
           """
-        plugins {
-            id("$PLUGIN_ID")
-        }
-        
-        tasks {
-          create("bootJar") {
-            doFirst{
-                 logger.lifecycle("Would now create jar file")
+          plugins {
+              id("$PLUGIN_ID")
+          }
+          
+          tasks {
+            create("bootJar") {
+              doFirst{
+                   logger.lifecycle("Would now create jar file")
+              }
             }
           }
-        }
-    """
+          """.trimIndent()
       )
 
       val exception = shouldThrow<UnexpectedBuildFailure> {
@@ -84,12 +85,14 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
         GradleRunner.create()
             .withProjectDir(testProjectDir)
             .withPluginClasspath()
-            .withArguments("publishImage", "--dry-run")
+            .withArguments("publishImage")
             .forwardOutput()
             .build()
       }
-      val expectedOutput = """> Could not create task ':publishImage'.
-   > organisation must be set"""
+      val expectedOutput = """
+        Execution failed for task ':buildImage'.
+        > organisation must be set
+        """.trimIndent()
 
       exception.message shouldContain expectedOutput
       exception.message shouldContain "BUILD FAILED"
@@ -98,13 +101,14 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
     "publishImage should fail if no bootJar task is available" {
       buildFile.writeText(
           """
-        plugins {
-            id("$PLUGIN_ID")
-        }
-        
-        dockerPublish {
-          organisation.set("foo")
-        }"""
+          plugins {
+              id("$PLUGIN_ID")
+          }
+          
+          dockerPublish {
+            organisation.set("foo")
+          }
+          """.trimIndent()
       )
 
       val exception = shouldThrow<UnexpectedBuildFailure> {
