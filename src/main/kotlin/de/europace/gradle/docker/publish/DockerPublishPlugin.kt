@@ -20,8 +20,6 @@ class DockerPublishPlugin : Plugin<Project> {
     val dockerBuildContextDir = File("${project.buildDir.path}/docker")
     val extension = project.extensions.findByName(EXTENSION_NAME) as? DockerPublishExtension ?: project.extensions.create(EXTENSION_NAME, DockerPublishExtension::class.java, project)
 
-    fun dockerImageId() = "${getOrganisation(extension)}/${extension.imageName.get()}:${extension.imageTag.get()}"
-
     project.pluginManager.apply(PublishingPlugin::class.java)
     project.pluginManager.apply(DockerPlugin::class.java)
 
@@ -39,26 +37,26 @@ class DockerPublishPlugin : Plugin<Project> {
         it.rename { extension.artifactName.get() }
       }
 
-      val buildImage = project.tasks.register("buildImage", DockerBuildTask::class.java) {
-        it.dependsOn(copyArtifact)
-        it.dependsOn(prepareBuildContext)
-        it.buildContextDirectory.set(dockerBuildContextDir)
-        it.imageName.set(dockerImageId())
-        it.buildParams.set(mapOf("rm" to true, "pull" to true))
-        it.enableBuildLog.set(true)
+      val buildImage = project.tasks.register("buildImage", DockerBuildTask::class.java) { buildTask ->
+        buildTask.dependsOn(copyArtifact)
+        buildTask.dependsOn(prepareBuildContext)
+        buildTask.buildContextDirectory.set(dockerBuildContextDir)
+        buildTask.imageName.set(dockerImageId(project, extension))
+        buildTask.buildParams.set(mapOf("rm" to true, "pull" to true))
+        buildTask.enableBuildLog.set(true)
 
-        it.doLast {
-          project.logger.info("Image built as ${dockerImageId()}")
+        buildTask.doLast {
+          project.logger.info("Image built as ${buildTask.imageName.get()}")
         }
       }
 
       val rmiLocalImage = project.tasks.register("rmiLocalImage", DockerRmiTask::class.java) {
-        it.imageId.set(dockerImageId())
+        it.imageId.set(dockerImageId(project, extension))
       }
 
       val publishImage = project.tasks.register("publishImage", DockerPushTask::class.java) {
         it.dependsOn(buildImage)
-        it.repositoryName.set(dockerImageId())
+        it.repositoryName.set(dockerImageId(project, extension))
         it.finalizedBy(rmiLocalImage)
         it.authConfig.set(it.dockerClient.readDefaultAuthConfig())
       }
@@ -69,7 +67,16 @@ class DockerPublishPlugin : Plugin<Project> {
     }
   }
 
-  private fun getOrganisation(extension: DockerPublishExtension): String {
-    return extension.organisation.getOrNull() ?: throw GradleException("organisation must be set")
+  private fun dockerImageId(project: Project, extension: DockerPublishExtension) = project.providers.zip(
+      getOrganisation(project, extension), getImageNameWithTag(project, extension)) { organisation, imageNameWithTag -> "$organisation/$imageNameWithTag" }
+
+  private fun getOrganisation(project: Project, extension: DockerPublishExtension) = project.provider {
+    if (!extension.organisation.isPresent) {
+      throw GradleException("organisation must be set")
+    }
+    extension.organisation.get()
   }
+
+  private fun getImageNameWithTag(project: Project, extension: DockerPublishExtension) = project.providers.zip(
+      extension.imageName, extension.imageTag) { imageName, imageTag -> "$imageName:$imageTag" }
 }
