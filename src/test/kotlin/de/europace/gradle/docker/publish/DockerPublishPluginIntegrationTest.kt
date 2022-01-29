@@ -91,7 +91,8 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
       }
       val expectedOutput = """
         Execution failed for task ':buildImage'.
-        > organisation must be set
+        > Failed to calculate the value of task ':buildImage' property 'imageName'.
+           > organisation must be set
         """.trimIndent()
 
       exception.message shouldContain expectedOutput
