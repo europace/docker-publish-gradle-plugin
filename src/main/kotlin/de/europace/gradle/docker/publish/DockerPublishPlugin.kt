@@ -58,7 +58,7 @@ class DockerPublishPlugin : Plugin<Project> {
         it.dependsOn(buildImage)
         it.repositoryName.set(dockerImageId(project, extension))
         it.finalizedBy(rmiLocalImage)
-        it.authConfig.set(it.dockerClient.readDefaultAuthConfig())
+        it.authConfig.set(project.provider { it.dockerClient.resolveAuthConfigForImage(dockerImageId(project, extension).get()) })
       }
 
       project.tasks.named(PUBLISH_LIFECYCLE_TASK_NAME) {
