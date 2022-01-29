@@ -61,7 +61,7 @@ class DockerPublishPluginTest : FreeSpec() {
         project.pluginManager.apply(DockerPublishPlugin::class.java)
         project.evaluate()
 
-        (project.tasks.getByName("prepareBuildContext") as Copy).destinationDir.path shouldEndWith "/docker"
+        (project.tasks.getByName("prepareBuildContext") as Copy).destinationDir.name shouldBe "docker"
       }
     }
 
@@ -75,7 +75,7 @@ class DockerPublishPluginTest : FreeSpec() {
 
         val task = project.tasks.getByName("copyArtifact") as Copy
         task.dependsOn.any { (it as? DefaultTask)?.name == "bootJar" } shouldBe true
-        task.destinationDir.path shouldEndWith "/docker"
+        task.destinationDir.name shouldBe "docker"
       }
 
       "should use defined artifactTask" {
@@ -104,7 +104,7 @@ class DockerPublishPluginTest : FreeSpec() {
         val task = (project.tasks.getByName("buildImage") as DockerBuildTask)
         task.dependsOn.any { (it as? TaskProvider<*>)?.name == "copyArtifact" } shouldBe true
         task.dependsOn.any { (it as? TaskProvider<*>)?.name == "prepareBuildContext" } shouldBe true
-        task.buildContextDirectory.asFile.get().path shouldEndWith "/docker"
+        task.buildContextDirectory.asFile.get().name shouldBe "docker"
         task.imageName.get() shouldBe "some-organisation/${project.name}:${project.version}"
         task.buildParams.get() shouldBe mapOf("rm" to true, "pull" to true)
         task.enableBuildLog.get() shouldBe true
