@@ -63,6 +63,46 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
       result.output shouldContain "BUILD SUCCESSFUL"
     }
 
+    "publishImage should lookup the authConfig without errors" {
+      buildFile.writeText(
+          """
+          plugins {
+            id("$PLUGIN_ID")
+          }
+
+          dockerPublish {
+            organisation.set("foo")
+          }
+
+          tasks {
+            create("bootJar") {
+              doFirst {
+                logger.lifecycle("Would now create jar file")
+              }
+            }
+            withType<de.gesellix.gradle.docker.tasks.DockerPushTask>().matching { it.name == "publishImage" }.configureEach {
+              doFirst {
+                logger.lifecycle("image: ${"$"}{repositoryName.get()}, authConfig: ${"$"}{if (authConfig.get() == null) {"missing"} else {"found"}}")
+                throw GradleException("won't continue with ${"$"}{this.name}")
+              }
+            }
+          }
+          """.trimIndent()
+      )
+
+      val exception = shouldThrow<UnexpectedBuildFailure> {
+        GradleRunner.create()
+            .withProjectDir(testProjectDir)
+            .withPluginClasspath()
+            .withArguments("publishImage", "-x", "buildImage", "--info", "--stacktrace")
+            .forwardOutput()
+            .build()
+      }
+
+      exception.message shouldContain "authConfig: found"
+      exception.message shouldContain "won't continue with publishImage"
+    }
+
     "publishImage should fail if no organisation is set" {
       buildFile.writeText(
           """
