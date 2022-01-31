@@ -105,7 +105,7 @@ class DockerPublishPluginTest : FreeSpec() {
         task.dependsOn.any { (it as? TaskProvider<*>)?.name == "copyArtifact" } shouldBe true
         task.dependsOn.any { (it as? TaskProvider<*>)?.name == "prepareBuildContext" } shouldBe true
         task.buildContextDirectory.asFile.get().path shouldEndWith "/docker"
-        task.imageName.get() shouldBe "someOrganisation/${project.name}:${project.version}"
+        task.imageName.get() shouldBe "some-organisation/${project.name}:${project.version}"
         task.buildParams.get() shouldBe mapOf("rm" to true, "pull" to true)
         task.enableBuildLog.get() shouldBe true
       }
@@ -120,7 +120,7 @@ class DockerPublishPluginTest : FreeSpec() {
         project.version = "version-after-evaluate"
 
         val task = (project.tasks.getByName("buildImage") as DockerBuildTask)
-        task.imageName.get() shouldBe "someOrganisation/${project.name}:version-after-evaluate"
+        task.imageName.get() shouldBe "some-organisation/${project.name}:version-after-evaluate"
       }
 
       "should set correct defined values" {
@@ -148,7 +148,7 @@ class DockerPublishPluginTest : FreeSpec() {
         project.evaluate()
 
         val task = (project.tasks.getByName("rmiLocalImage") as DockerRmiTask)
-        task.imageId.get() shouldBe "someOrganisation/${project.name}:${project.version}"
+        task.imageId.get() shouldBe "some-organisation/${project.name}:${project.version}"
       }
 
       "should set correct defined values" {
@@ -178,7 +178,7 @@ class DockerPublishPluginTest : FreeSpec() {
         val task = (project.tasks.getByName("publishImage") as DockerPushTask)
         task.dependsOn.any { (it as? TaskProvider<*>)?.name == "buildImage" } shouldBe true
         task.finalizedByElement().name shouldBe "rmiLocalImage"
-        task.repositoryName.get() shouldBe "someOrganisation/${project.name}:${project.version}"
+        task.repositoryName.get() shouldBe "some-organisation/${project.name}:${project.version}"
         task.authConfig.get() shouldNotBe null
       }
 
@@ -206,7 +206,7 @@ class DockerPublishPluginTest : FreeSpec() {
     return this
   }
 
-  private fun Project.createDockerPublishExtension(organisation: String = "someOrganisation"): DockerPublishExtension =
+  private fun Project.createDockerPublishExtension(organisation: String = "some-organisation"): DockerPublishExtension =
       project.extensions.create("dockerPublish", DockerPublishExtension::class.java, this).apply {
         this.organisation.set(organisation)
       }
