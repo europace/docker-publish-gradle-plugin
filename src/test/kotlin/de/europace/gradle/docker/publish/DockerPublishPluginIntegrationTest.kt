@@ -59,7 +59,7 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
         :publishImage SKIPPED
         :rmiLocalImage SKIPPED
         """.trimIndent()
-      result.output shouldStartWith expectedOutput
+      result.output.normalizedLineSeparators() shouldStartWith expectedOutput.normalizedLineSeparators()
       result.output shouldContain "BUILD SUCCESSFUL"
     }
 
@@ -135,7 +135,7 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
            > organisation must be set
         """.trimIndent()
 
-      exception.message shouldContain expectedOutput
+      exception.message?.normalizedLineSeparators() shouldContain expectedOutput.normalizedLineSeparators()
       exception.message shouldContain "BUILD FAILED"
     }
 
@@ -168,3 +168,5 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
     }
   }
 }
+
+fun String.normalizedLineSeparators(): String = this.replace("[\n\r]+".toRegex(), "\n")
