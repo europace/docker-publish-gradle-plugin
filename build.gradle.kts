@@ -13,7 +13,7 @@ val mockkVersion = "1.12.3"
 plugins {
   `maven-publish`
   `java-gradle-plugin`
-  kotlin("jvm") version "1.6.10" // remember to update in dependencyVersionsByGroup
+  kotlin("jvm") version "1.6.20" // remember to update in dependencyVersionsByGroup
   id("com.gradle.plugin-publish") version "0.21.0"
 }
 
