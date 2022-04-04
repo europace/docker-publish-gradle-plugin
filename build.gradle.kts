@@ -6,7 +6,7 @@ buildscript {
 }
 val javaVersion = JavaVersion.VERSION_1_8
 val kotestVersion = "4.6.4"
-val kotlinVersion = "1.6.10" // remember to update in plugins
+val kotlinVersion = "1.6.20" // remember to update in plugins
 val kotlinxVersion = "1.5.2"
 val mockkVersion = "1.12.3"
 
