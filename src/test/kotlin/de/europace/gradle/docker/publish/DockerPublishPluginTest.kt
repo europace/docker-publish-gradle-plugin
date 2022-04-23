@@ -7,7 +7,6 @@ import de.gesellix.gradle.docker.tasks.DockerRmiTask
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import io.kotest.matchers.string.shouldEndWith
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.internal.project.ProjectInternal
