@@ -16,7 +16,7 @@ abstract class DockerPublishExtension @Inject constructor(project: Project) {
   init {
     artifactTaskName.convention("bootJar")
     artifactName.convention("application.jar")
-    imageName.convention(project.provider { project.name })
+    imageName.convention(project.provider { project.name.lowercase() })
     imageTag.convention(project.provider { project.version as String })
     dockerBuildContextSources.convention("${project.projectDir.path}/src/main/docker")
   }
