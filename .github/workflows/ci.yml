@@ -1,6 +1,6 @@
 name: CI
 
-on: [ push ]
+on: [ push, pull_request ]
 
 jobs:
   ci:
@@ -27,9 +27,6 @@ jobs:
           cache: 'gradle'
       - name: clean build
         run: ./gradlew clean build --no-daemon --info --stacktrace
-        env:
-          PACKAGE_REGISTRY_USER: ${{ secrets.PACKAGE_REGISTRY_USER }}
-          PACKAGE_REGISTRY_TOKEN: ${{ secrets.PACKAGE_REGISTRY_TOKEN }}
       - name: Publish Test Report
         if: ${{ always() }}
         uses: scacap/action-surefire-report@v1
