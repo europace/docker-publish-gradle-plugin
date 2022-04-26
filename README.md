@@ -10,7 +10,7 @@ The plugin is available on the official [Gradle plugin portal](https://plugins.g
     plugins {
       id("de.europace.docker-publish") version "..."
     }
-    
+
     dockerPublish{
         organisation.set("my-dockerhub-organisation")
     }
