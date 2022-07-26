@@ -1,6 +1,6 @@
 val javaVersion = JavaVersion.VERSION_1_8
 val kotestVersion = "5.2.2"
-val kotlinVersion = "1.7.0" // remember to update in plugins
+val kotlinVersion = "1.7.10" // remember to update in plugins
 val kotlinxVersion = "1.6.0"
 val mockkVersion = "1.12.4"
 
