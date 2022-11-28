@@ -26,7 +26,8 @@ val dependencyVersionsByGroup = mapOf(
     "org.jetbrains.kotlinx" to kotlinxVersion,
     "org.junit" to junitVersion,
     "org.junit.jupiter" to junitVersion,
-    "org.junit.platform" to "1.9.1"
+    "org.junit.platform" to "1.9.1",
+    "org.slf4j" to "1.7.36"
 )
 
 java {
@@ -52,7 +53,7 @@ repositories {
 
 dependencies {
   implementation(gradleApi())
-  implementation("de.gesellix:gradle-docker-plugin:2022-07-28T23-30-00")
+  implementation("de.gesellix:gradle-docker-plugin:2022-11-09T21-45-00")
 
   testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion")
   testImplementation("io.kotest:kotest-framework-engine-jvm:$kotestVersion")
