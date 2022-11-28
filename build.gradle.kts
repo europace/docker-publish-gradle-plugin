@@ -26,7 +26,8 @@ val dependencyVersionsByGroup = mapOf(
     "org.jetbrains.kotlinx" to kotlinxVersion,
     "org.junit" to junitVersion,
     "org.junit.jupiter" to junitVersion,
-    "org.junit.platform" to "1.9.1"
+    "org.junit.platform" to "1.9.1",
+    "org.slf4j" to "1.7.36"
 )
 
 java {
