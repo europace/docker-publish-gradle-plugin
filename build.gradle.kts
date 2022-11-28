@@ -1,7 +1,7 @@
 val javaVersion = JavaVersion.VERSION_1_8
 val junitVersion = "5.9.1"
 val kotestVersion = "5.5.4"
-val kotlinVersion = "1.7.21" // remember to update in plugins
+val kotlinVersion = "1.7.22" // remember to update in plugins
 val kotlinxVersion = "1.6.4"
 val mockkVersion = "1.13.2"
 
@@ -9,7 +9,7 @@ plugins {
   `maven-publish`
   `java-gradle-plugin`
   kotlin("jvm") version "1.7.22" // remember to update in dependencyVersionsByGroup
-  id("com.gradle.plugin-publish") version "1.1.0"
+  id("com.gradle.plugin-publish") version "1.0.0"
 }
 
 group = "de.europace.gradle"
