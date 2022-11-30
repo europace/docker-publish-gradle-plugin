@@ -3,7 +3,7 @@ val junitVersion = "5.9.1"
 val kotestVersion = "5.5.4"
 val kotlinVersion = "1.7.22" // remember to update in plugins
 val kotlinxVersion = "1.6.4"
-val mockkVersion = "1.13.2"
+val mockkVersion = "1.13.3"
 
 plugins {
   `maven-publish`
