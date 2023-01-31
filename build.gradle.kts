@@ -16,7 +16,7 @@ group = "de.europace.gradle"
 logger.lifecycle("version: $version")
 
 val dependencyVersions = listOf(
-    "com.squareup.okio:okio:3.2.0",
+    "com.squareup.okio:okio:3.3.0",
     "io.mockk:mockk:$mockkVersion"
 )
 
