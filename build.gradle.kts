@@ -76,19 +76,16 @@ allprojects {
   }
 }
 
-pluginBundle {
-  website = "https://github.com/europace/docker-publish-gradle-plugin"
-  vcsUrl = "https://github.com/europace/docker-publish-gradle-plugin"
-  tags = listOf("docker", "publish", "publishing")
-}
-
 gradlePlugin {
+  website.set("https://github.com/europace/docker-publish-gradle-plugin")
+  vcsUrl.set("https://github.com/europace/docker-publish-gradle-plugin")
   plugins {
     create("dockerPublishPlugin") {
       id = "de.europace.docker-publish"
       displayName = "Docker Publish Plugin"
       description = "Adds tasks to create and publish a Docker image to a registry"
       implementationClass = "de.europace.gradle.docker.publish.DockerPublishPlugin"
+      tags.set(listOf("docker", "publish", "publishing"))
     }
   }
 }
