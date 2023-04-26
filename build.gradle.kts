@@ -1,7 +1,7 @@
 val javaVersion = JavaVersion.VERSION_1_8
 val junitVersion = "5.9.1"
 val kotestVersion = "5.5.4"
-val kotlinVersion = "1.8.10" // remember to update in plugins
+val kotlinVersion = "1.8.21" // remember to update in plugins
 val kotlinxVersion = "1.6.4"
 val mockkVersion = "1.13.5"
 
