@@ -6,7 +6,7 @@ val kotlinxVersion = "1.6.4"
 val mockkVersion = "1.13.5"
 
 plugins {
-  kotlin("jvm") version "1.8.21" // remember to update in dependency
+  kotlin("jvm") version "1.8.22" // remember to update in dependency
   id("com.gradle.plugin-publish") version "1.2.0"
 }
 
