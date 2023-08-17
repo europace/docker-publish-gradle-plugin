@@ -16,7 +16,7 @@ kotestRunner = { module = "io.kotest:kotest-runner-junit5-jvm", version.ref = "k
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 # for dependency enforcement
-annotations = { module = "org.jetbrains:annotations", version = "23.0.0" }
+annotations = { module = "org.jetbrains:annotations", version = "24.0.1" }
 byteBuddy = { module = "net.bytebuddy:byte-buddy", version.ref = "byteBuddy" }
 kotlinx = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "kotlinx" }
 okio = { module = "com.squareup.okio:okio", version = "3.5.0" }
