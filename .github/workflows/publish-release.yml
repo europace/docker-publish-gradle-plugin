@@ -15,7 +15,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: 1.8
+          java-version: 8
       - name: Set artifact version
         run: |
           echo "RELEASE_VERSION=$(echo '${{ github.event.release.tag_name }}' | sed -e s/^v//)" >> $GITHUB_ENV
