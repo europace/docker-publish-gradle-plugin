@@ -2,7 +2,7 @@ val javaVersion = JavaVersion.VERSION_1_8
 
 plugins {
   alias(libs.plugins.kotlinJvm)
-  id("com.gradle.plugin-publish") version "1.2.0"
+  id("com.gradle.plugin-publish") version "1.2.1"
 }
 
 group = "de.europace.gradle"
