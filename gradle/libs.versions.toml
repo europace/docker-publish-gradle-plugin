@@ -1,0 +1,28 @@
+[versions]
+byteBuddy = "1.12.20"
+junit = "5.9.1"
+kotest = "5.6.2"
+kotlin = "1.9.0"
+kotlinx = "1.6.4"
+mockk = "1.13.7"
+
+
+[libraries]
+gradleDocker = { module = "de.gesellix:gradle-docker-plugin", version = "2023-08-16T09-45-00" }
+kotest = { module = "io.kotest:kotest-assertions-core-jvm", version.ref = "kotest" }
+kotestEngine = { module = "io.kotest:kotest-framework-engine-jvm", version.ref = "kotest" }
+kotestProperty = { module = "io.kotest:kotest-property-jvm", version.ref = "kotest" }
+kotestRunner = { module = "io.kotest:kotest-runner-junit5-jvm", version.ref = "kotest" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+
+# for dependency enforcement
+annotations = { module = "org.jetbrains:annotations", version = "23.0.0" }
+byteBuddy = { module = "net.bytebuddy:byte-buddy", version.ref = "byteBuddy" }
+kotlinx = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "kotlinx" }
+okio = { module = "com.squareup.okio:okio", version = "3.5.0" }
+
+[bundles]
+kotest = ["kotest", "kotestEngine", "kotestProperty", "kotestRunner"]
+
+[plugins]
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
