@@ -11,7 +11,8 @@ logger.lifecycle("version: $version")
 val dependencyVersions = listOf(
     libs.annotations,
     libs.mockk,
-    libs.okio
+    libs.okio,
+    libs.opentest4j
 )
 
 val dependencyVersionsByGroup = mapOf(
