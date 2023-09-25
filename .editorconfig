@@ -10,9 +10,15 @@ ij_continuation_indent_size = 4
 ij_smart_tabs = false
 ij_visual_guides = none
 ij_wrap_on_typing = false
+ktlint_code_style = intellij_idea
 ktlint_standard_indent = disabled
 ktlint_standard_parameter-list-wrapping = disabled
 ktlint_standard_keyword-spacing = disabled
+ktlint_standard_argument-list-wrapping = disabled
+ktlint_standard_wrapping = disabled
+ktlint_standard_trailing-comma-on-call-site = disabled
+ktlint_standard_trailing-comma-on-declaration-site = disabled
+ktlint_standard_multiline-if-else = disabled
 
 [.editorconfig]
 ij_editorconfig_align_group_field_declarations = false
