@@ -1,7 +1,7 @@
 [versions]
 byteBuddy = "1.14.9"
 junit = "5.9.1"
-kotest = "5.7.2"
+kotest = "5.8.0"
 kotlin = "1.9.20"
 kotlinx = "1.7.3"
 mockk = "1.13.8"
