@@ -2,13 +2,13 @@
 byteBuddy = "1.14.10"
 junit = "5.9.1"
 kotest = "5.8.0"
-kotlin = "1.9.20"
+kotlin = "1.9.21"
 kotlinx = "1.7.3"
 mockk = "1.13.8"
 
 
 [libraries]
-gradleDocker = { module = "de.gesellix:gradle-docker-plugin", version = "2023-11-05T19-45-00" }
+gradleDocker = { module = "de.gesellix:gradle-docker-plugin", version = "2023-12-01T19-40-00" }
 kotest = { module = "io.kotest:kotest-assertions-core-jvm", version.ref = "kotest" }
 kotestEngine = { module = "io.kotest:kotest-framework-engine-jvm", version.ref = "kotest" }
 kotestProperty = { module = "io.kotest:kotest-property-jvm", version.ref = "kotest" }
