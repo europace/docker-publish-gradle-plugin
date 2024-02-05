@@ -14,6 +14,6 @@ jobs:
       # Write permission is required for autolabeler
       pull-requests: write
     steps:
-      - uses: release-drafter/release-drafter@v5
+      - uses: release-drafter/release-drafter@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
