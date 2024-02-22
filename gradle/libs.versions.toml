@@ -8,7 +8,7 @@ mockk = "1.13.9"
 
 
 [libraries]
-gradleDocker = { module = "de.gesellix:gradle-docker-plugin", version = "2024-01-17T08-50-00" }
+gradleDocker = { module = "de.gesellix:gradle-docker-plugin", version = "2024-02-22T21-15-00" }
 kotest = { module = "io.kotest:kotest-assertions-core-jvm", version.ref = "kotest" }
 kotestEngine = { module = "io.kotest:kotest-framework-engine-jvm", version.ref = "kotest" }
 kotestProperty = { module = "io.kotest:kotest-property-jvm", version.ref = "kotest" }
