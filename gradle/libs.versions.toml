@@ -4,7 +4,7 @@ junit = "5.9.1"
 kotest = "5.8.0"
 kotlin = "1.9.22"
 kotlinx = "1.8.0"
-mockk = "1.13.9"
+mockk = "1.13.10"
 
 
 [libraries]
