@@ -78,4 +78,13 @@ gradlePlugin {
       tags.set(listOf("docker", "publish", "publishing"))
     }
   }
+  publishing {
+    publications {
+      register("pluginMaven", MavenPublication::class) {
+        pom {
+          url.set("https://github.com/europace/docker-publish-gradle-plugin")
+        }
+      }
+    }
+  }
 }
