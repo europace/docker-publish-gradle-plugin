@@ -79,11 +79,10 @@ gradlePlugin {
     }
   }
   publishing {
-    publications {
-      register("pluginMaven", MavenPublication::class) {
-        pom {
-          url.set("https://github.com/europace/docker-publish-gradle-plugin")
-        }
+    publications.withType(MavenPublication::class).configureEach {
+      logger.lifecycle("publication: $name")
+      pom {
+        url.set("https://github.com/europace/docker-publish-gradle-plugin")
       }
     }
   }
