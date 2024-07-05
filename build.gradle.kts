@@ -80,7 +80,6 @@ gradlePlugin {
   }
   publishing {
     publications.withType(MavenPublication::class).configureEach {
-      logger.lifecycle("publication: $name")
       pom {
         url.set("https://github.com/europace/docker-publish-gradle-plugin")
       }
