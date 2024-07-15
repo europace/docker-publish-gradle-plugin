@@ -82,6 +82,9 @@ gradlePlugin {
     publications.withType(MavenPublication::class).configureEach {
       pom {
         url.set("https://github.com/europace/docker-publish-gradle-plugin")
+        scm {
+          url.set("https://github.com/europace/docker-publish-gradle-plugin")
+        }
       }
     }
   }
