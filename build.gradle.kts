@@ -1,4 +1,7 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 val javaVersion = JavaVersion.VERSION_17
+val jvmVersion = JvmTarget.JVM_17
 
 plugins {
   alias(libs.plugins.kotlinJvm)
@@ -12,7 +15,9 @@ val dependencyVersions = listOf(
     libs.annotations,
     libs.mockk,
     libs.okio,
-    libs.opentest4j
+    libs.okioJvm,
+    libs.opentest4j,
+    libs.slf4j
 )
 
 val dependencyVersionsByGroup = mapOf(
@@ -31,9 +36,9 @@ tasks {
     useJUnitPlatform()
   }
   withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-      jvmTarget = javaVersion.toString()
-      freeCompilerArgs = listOf("-Xjsr305=strict")
+    compilerOptions {
+      jvmTarget.set(jvmVersion)
+      freeCompilerArgs.set(listOf("-Xjsr305=strict"))
     }
   }
 }
@@ -67,8 +72,9 @@ allprojects {
 }
 
 gradlePlugin {
-  website.set("https://github.com/europace/docker-publish-gradle-plugin")
-  vcsUrl.set("https://github.com/europace/docker-publish-gradle-plugin")
+  val scmUrl = "https://github.com/europace/docker-publish-gradle-plugin"
+  website.set(scmUrl)
+  vcsUrl.set(scmUrl)
   plugins {
     create("dockerPublishPlugin") {
       id = "de.europace.docker-publish"
@@ -79,11 +85,22 @@ gradlePlugin {
     }
   }
   publishing {
-    publications.withType(MavenPublication::class).configureEach {
-      pom {
-        url.set("https://github.com/europace/docker-publish-gradle-plugin")
-        scm {
-          url.set("https://github.com/europace/docker-publish-gradle-plugin")
+    publications {
+      register("plugin", MavenPublication::class) {
+        from(components["java"])
+        pom {
+          url.set(scmUrl)
+          scm {
+            url.set(scmUrl)
+          }
+        }
+      }
+      withType(MavenPublication::class).configureEach {
+        pom {
+          url.set(scmUrl)
+          scm {
+            url.set(scmUrl)
+          }
         }
       }
     }
