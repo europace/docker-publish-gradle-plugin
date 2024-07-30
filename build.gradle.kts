@@ -71,10 +71,10 @@ allprojects {
   }
 }
 
+val scmUrl = "github.com/europace/docker-publish-gradle-plugin"
 gradlePlugin {
-  val scmUrl = "https://github.com/europace/docker-publish-gradle-plugin"
-  website.set(scmUrl)
-  vcsUrl.set(scmUrl)
+  website.set("https://$scmUrl")
+  vcsUrl.set("https://$scmUrl")
   plugins {
     create("dockerPublishPlugin") {
       id = "de.europace.docker-publish"
@@ -84,23 +84,17 @@ gradlePlugin {
       tags.set(listOf("docker", "publish", "publishing"))
     }
   }
-  publishing {
-    publications {
-      register("plugin", MavenPublication::class) {
-        from(components["java"])
-        pom {
-          url.set(scmUrl)
-          scm {
-            url.set(scmUrl)
-          }
-        }
-      }
-      withType(MavenPublication::class).configureEach {
-        pom {
-          url.set(scmUrl)
-          scm {
-            url.set(scmUrl)
-          }
+}
+publishing {
+  publications {
+    register<MavenPublication>("dockerPublishPlugin") {
+      from(components["java"])
+      pom {
+        url.set("https://$scmUrl")
+        scm {
+          connection.set("scm:git:$scmUrl")
+          developerConnection.set("scm:git:ssh://$scmUrl")
+          url.set("https://$scmUrl")
         }
       }
     }
