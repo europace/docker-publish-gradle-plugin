@@ -23,7 +23,7 @@ kotlinx = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.re
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 okioJvm = { module = "com.squareup.okio:okio-jvm", version.ref = "okio" }
 opentest4j = { module = "org.opentest4j:opentest4j", version = "1.3.0" }
-slf4j = { module = "org.slf4j:slf4j-api", version = "2.0.15" }
+slf4j = { module = "org.slf4j:slf4j-api", version = "2.0.16" }
 
 [bundles]
 kotest = ["kotest", "kotestEngine", "kotestProperty", "kotestRunner"]
