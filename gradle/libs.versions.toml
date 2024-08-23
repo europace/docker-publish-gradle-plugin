@@ -1,5 +1,5 @@
 [versions]
-byteBuddy = "1.14.19"
+byteBuddy = "1.15.0"
 junit = "5.9.1"
 kotest = "5.9.1"
 kotlin = "2.0.20"
