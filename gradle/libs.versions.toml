@@ -1,10 +1,10 @@
 [versions]
-byteBuddy = "1.15.3"
+byteBuddy = "1.15.4"
 junit = "5.9.1"
 kotest = "5.9.1"
 kotlin = "2.0.20"
 kotlinx = "1.9.0"
-mockk = "1.13.12"
+mockk = "1.13.13"
 okio = "3.9.1"
 
 
