@@ -17,7 +17,7 @@ const val EXTENSION_NAME = "dockerPublish"
 class DockerPublishPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
-    val dockerBuildContextDir = File("${project.buildDir.path}/docker")
+    val dockerBuildContextDir = File("${project.layout.buildDirectory.get().asFile.path}/docker")
     val extension = project.extensions.findByName(EXTENSION_NAME) as? DockerPublishExtension ?: project.extensions.create(EXTENSION_NAME, DockerPublishExtension::class.java, project)
 
     project.pluginManager.apply(PublishingPlugin::class.java)
