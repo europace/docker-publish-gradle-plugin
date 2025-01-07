@@ -1,7 +1,7 @@
 package de.europace.gradle.docker.publish
 
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.spec.style.FreeSpec
+import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldStartWith
@@ -11,21 +11,17 @@ import org.gradle.testkit.runner.UnexpectedBuildFailure
 
 const val PLUGIN_ID = "de.europace.docker-publish"
 
-class DockerPublishPluginIntegrationTest : FreeSpec() {
+class DockerPublishPluginIntegrationTest : DescribeSpec({
 
-  private val testProjectDir = tempdir()
+  val testProjectDir = tempdir()
 
-  private lateinit var buildFile: File
+  val buildFile = File(testProjectDir, "build.gradle.kts")
 
-  init {
+  fun String.normalizedLineSeparators(): String = this.replace("[\n\r]+".toRegex(), "\n")
 
-    beforeTest {
-      buildFile = File(testProjectDir, "build.gradle.kts")
-    }
-
-    "publishImage should have tasks in right order" {
-      buildFile.writeText(
-          """
+  it("publishImage should have tasks in right order") {
+    buildFile.writeText(
+        """
           plugins {
             id("$PLUGIN_ID")
           }
@@ -35,23 +31,23 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
           }
           
           tasks {
-            create("bootJar") {
+            register("bootJar") {
               doFirst {
                 logger.lifecycle("Would now create jar file")
               }
             }
           }
           """.trimIndent()
-      )
+    )
 
-      val result = GradleRunner.create()
-          .withProjectDir(testProjectDir)
-          .withPluginClasspath()
-          .withArguments("publishImage", "--dry-run")
-          .forwardOutput()
-          .build()
+    val result = GradleRunner.create()
+        .withProjectDir(testProjectDir)
+        .withPluginClasspath()
+        .withArguments("publishImage", "--dry-run")
+        .forwardOutput()
+        .build()
 
-      val expectedOutput = """
+    val expectedOutput = """
         :bootJar SKIPPED
         :copyArtifact SKIPPED
         :prepareBuildContext SKIPPED
@@ -59,13 +55,14 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
         :publishImage SKIPPED
         :rmiLocalImage SKIPPED
         """.trimIndent()
-      result.output.normalizedLineSeparators() shouldStartWith expectedOutput.normalizedLineSeparators()
-      result.output shouldContain "BUILD SUCCESSFUL"
-    }
 
-    "publishImage should lookup the authConfig without errors" {
-      buildFile.writeText(
-          """
+    result.output.normalizedLineSeparators() shouldStartWith expectedOutput.normalizedLineSeparators()
+    result.output shouldContain "BUILD SUCCESSFUL"
+  }
+
+  it("publishImage should lookup the authConfig without errors") {
+    buildFile.writeText(
+        """
           plugins {
             id("$PLUGIN_ID")
           }
@@ -75,7 +72,7 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
           }
 
           tasks {
-            create("bootJar") {
+            register("bootJar") {
               doFirst {
                 logger.lifecycle("Would now create jar file")
               }
@@ -88,28 +85,28 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
             }
           }
           """.trimIndent()
-      )
+    )
 
-      val exception = shouldThrow<UnexpectedBuildFailure> {
-        GradleRunner.create()
-            .withProjectDir(testProjectDir)
-            .withPluginClasspath()
-            .withArguments("publishImage", "-x", "buildImage", "--info", "--stacktrace")
-            .forwardOutput()
-            .build()
-      }
-
-      exception.message shouldContain "authConfig: found"
-      exception.message shouldContain "won't continue with publishImage"
+    val exception = shouldThrow<UnexpectedBuildFailure> {
+      GradleRunner.create()
+          .withProjectDir(testProjectDir)
+          .withPluginClasspath()
+          .withArguments("publishImage", "-x", "buildImage", "--info", "--stacktrace")
+          .forwardOutput()
+          .build()
     }
 
-    "publishImage should fail if no organisation is set" {
-      buildFile.writeText(
-          """
+    exception.message shouldContain "authConfig: found"
+    exception.message shouldContain "won't continue with publishImage"
+  }
+
+  it("publishImage should fail if no organisation is set") {
+    buildFile.writeText(
+        """
           plugins {
               id("$PLUGIN_ID")
           }
-          
+
           tasks {
             create("bootJar") {
               doFirst{
@@ -118,55 +115,54 @@ class DockerPublishPluginIntegrationTest : FreeSpec() {
             }
           }
           """.trimIndent()
-      )
+    )
 
-      val exception = shouldThrow<UnexpectedBuildFailure> {
+    val exception = shouldThrow<UnexpectedBuildFailure> {
 
-        GradleRunner.create()
-            .withProjectDir(testProjectDir)
-            .withPluginClasspath()
-            .withArguments("publishImage")
-            .forwardOutput()
-            .build()
-      }
-      val expectedOutput = """
+      GradleRunner.create()
+          .withProjectDir(testProjectDir)
+          .withPluginClasspath()
+          .withArguments("publishImage")
+          .forwardOutput()
+          .build()
+    }
+    val expectedOutput = """
         Execution failed for task ':buildImage'.
         > Failed to calculate the value of task ':buildImage' property 'imageName'.
            > organisation must be set
         """.trimIndent()
 
-      exception.message?.normalizedLineSeparators() shouldContain expectedOutput.normalizedLineSeparators()
-      exception.message shouldContain "BUILD FAILED"
-    }
+    exception.message?.normalizedLineSeparators() shouldContain expectedOutput.normalizedLineSeparators()
+    exception.message shouldContain "BUILD FAILED"
+  }
 
-    "publishImage should fail if no bootJar task is available" {
-      buildFile.writeText(
-          """
+  it("publishImage should fail if no bootJar task is available") {
+    buildFile.writeText(
+        """
           plugins {
               id("$PLUGIN_ID")
           }
-          
+
           dockerPublish {
             organisation.set("foo")
           }
           """.trimIndent()
-      )
+    )
 
-      val exception = shouldThrow<UnexpectedBuildFailure> {
+    val exception = shouldThrow<UnexpectedBuildFailure> {
 
-        GradleRunner.create()
-            .withProjectDir(testProjectDir)
-            .withPluginClasspath()
-            .withArguments("publishImage", "--dry-run")
-            .forwardOutput()
-            .build()
-      }
-      val expectedOutput = "> Task with name 'bootJar' not found in root project"
-
-      exception.message shouldContain expectedOutput
-      exception.message shouldContain "BUILD FAILED"
+      GradleRunner.create()
+          .withProjectDir(testProjectDir)
+          .withPluginClasspath()
+          .withArguments("publishImage", "--dry-run")
+          .forwardOutput()
+          .build()
     }
-  }
-}
+    val expectedOutput = "> Task with name 'bootJar' not found in root project"
 
-fun String.normalizedLineSeparators(): String = this.replace("[\n\r]+".toRegex(), "\n")
+    exception.message shouldContain expectedOutput
+    exception.message shouldContain "BUILD FAILED"
+  }
+})
+
+
