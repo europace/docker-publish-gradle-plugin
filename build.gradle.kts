@@ -76,7 +76,7 @@ gradlePlugin {
   website.set("https://$scmUrl")
   vcsUrl.set("https://$scmUrl")
   plugins {
-    create("dockerPublishPlugin") {
+    register("dockerPublishPlugin") {
       id = "de.europace.docker-publish"
       displayName = "Docker Publish Plugin"
       description = "Adds tasks to create and publish a Docker image to a registry"
