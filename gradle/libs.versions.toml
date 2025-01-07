@@ -3,9 +3,9 @@ byteBuddy = "1.15.11"
 junit = "5.9.1"
 kotest = "5.9.1"
 kotlin = "2.1.0"
-kotlinx = "1.10.0"
-mockk = "1.13.13"
-okio = "3.9.1"
+kotlinx = "1.10.1"
+mockk = "1.13.14"
+okio = "3.10.0"
 
 
 [libraries]
