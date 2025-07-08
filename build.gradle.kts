@@ -13,6 +13,7 @@ logger.lifecycle("version: $version")
 
 val dependencyVersions = listOf(
     libs.annotations,
+    libs.junitBom,
     libs.mockk,
     libs.okio,
     libs.okioJvm,
@@ -23,7 +24,9 @@ val dependencyVersions = listOf(
 val dependencyVersionsByGroup = mapOf(
     "net.bytebuddy" to libs.versions.byteBuddy.get(),
     "org.jetbrains.kotlin" to libs.versions.kotlin.get(),
-    "org.jetbrains.kotlinx" to libs.versions.kotlinx.get()
+    "org.jetbrains.kotlinx" to libs.versions.kotlinx.get(),
+    "org.junit.jupiter" to libs.versions.junitJupiter.get(),
+    "org.junit.platform" to libs.versions.junitPlatform.get(),
 )
 
 java {
