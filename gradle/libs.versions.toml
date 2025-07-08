@@ -1,6 +1,6 @@
 [versions]
 byteBuddy = "1.17.6"
-junitJupiter = "5.13.2"
+junitJupiter = "5.13.3"
 junitPlatform = "1.13.3"
 kotest = "5.9.1"
 kotlin = "2.2.0"
