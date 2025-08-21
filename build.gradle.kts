@@ -18,13 +18,15 @@ val dependencyVersions = listOf(
     libs.okio,
     libs.okioJvm,
     libs.opentest4j,
-    libs.slf4j
+    libs.slf4j,
+    libs.kotlinxBom,
+    libs.kotlinxIo
 )
 
 val dependencyVersionsByGroup = mapOf(
     "net.bytebuddy" to libs.versions.byteBuddy.get(),
+    "net.java.dev.jna" to libs.netJavaDev.get().version,
     "org.jetbrains.kotlin" to libs.versions.kotlin.get(),
-    "org.jetbrains.kotlinx" to libs.versions.kotlinx.get(),
     "org.junit.jupiter" to libs.versions.junitJupiter.get(),
     "org.junit.platform" to libs.versions.junitPlatform.get(),
 )
