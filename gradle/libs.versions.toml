@@ -2,7 +2,7 @@
 byteBuddy = "1.17.7"
 junitJupiter = "5.13.4"
 junitPlatform = "1.13.4"
-kotest = "6.0.1"
+kotest = "6.0.2"
 kotlin = "2.2.10"
 kotlinx = "1.10.2"
 mockk = "1.14.5"
@@ -17,7 +17,7 @@ kotestRunner = { module = "io.kotest:kotest-runner-junit5-jvm", version.ref = "k
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 # for dependency enforcement
-annotations = { module = "org.jetbrains:annotations", version = "26.0.2" }
+annotations = { module = "org.jetbrains:annotations", version = "26.0.2-1" }
 byteBuddy = { module = "net.bytebuddy:byte-buddy", version.ref = "byteBuddy" }
 kotlinxBom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version.ref = "kotlinx" }
 kotlinxIo = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version = "0.8.0" }
