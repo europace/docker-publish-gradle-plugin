@@ -1,12 +1,12 @@
 [versions]
-byteBuddy = "1.17.7"
-junitJupiter = "5.13.4"
-junitPlatform = "1.13.4"
+byteBuddy = "1.17.8"
+junitJupiter = "6.0.0"
+junitPlatform = "6.0.0"
 kotest = "6.0.3"
 kotlin = "2.2.20"
 kotlinx = "1.10.2"
-mockk = "1.14.5"
-okio = "3.16.0"
+mockk = "1.14.6"
+okio = "3.16.1"
 
 [libraries]
 gradleDocker = { module = "de.gesellix:gradle-docker-plugin", version = "2025-05-17T21-05-00" }
@@ -28,7 +28,7 @@ slf4j = { module = "org.slf4j:slf4j-api", version = "2.0.17" }
 junitBom = { module = "org.junit:junit-bom", version.ref = "junitJupiter" }
 junitJupiterEngine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiter" }
 junitPlatformLauncher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junitPlatform" }
-netJavaDev = { module = "net.java.dev.jna:jna", version = "5.18.0" }
+netJavaDev = { module = "net.java.dev.jna:jna", version = "5.18.1" }
 
 [bundles]
 kotest = ["kotest", "kotestEngine", "kotestProperty", "kotestRunner"]
