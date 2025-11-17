@@ -6,7 +6,7 @@ kotest = "6.0.4"
 kotlin = "2.2.21"
 kotlinx = "1.10.2"
 mockk = "1.14.6"
-okio = "3.16.2"
+okio = "3.16.4"
 
 [libraries]
 gradleDocker = { module = "de.gesellix:gradle-docker-plugin", version = "2025-11-12T23-20-00" }
