@@ -46,7 +46,7 @@ class DockerPublishPlugin : Plugin<Project> {
         buildTask.enableBuildLog.set(true)
 
         buildTask.doLast {
-          project.logger.info("Image built as ${buildTask.imageName.get()}")
+          it.logger.info("Image built as ${buildTask.imageName.get()}")
         }
       }
 
