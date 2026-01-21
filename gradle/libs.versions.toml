@@ -18,6 +18,7 @@ mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 # for dependency enforcement
 annotations = { module = "org.jetbrains:annotations", version = "26.0.2-1" }
 byteBuddy = { module = "net.bytebuddy:byte-buddy", version.ref = "byteBuddy" }
+groovy = { module = "org.codehaus.groovy:groovy", version = "4.0.29" }
 kotlinxBom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version.ref = "kotlinx" }
 kotlinxIo = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version = "0.8.2" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
