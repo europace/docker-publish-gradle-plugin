@@ -26,6 +26,7 @@ val dependencyVersions = listOf(
 val dependencyVersionsByGroup = mapOf(
     "net.bytebuddy" to libs.versions.byteBuddy.get(),
     "net.java.dev.jna" to libs.netJavaDev.get().version,
+    "org.apache.groovy" to libs.groovy.get().version,
     "org.jetbrains.kotlin" to libs.versions.kotlin.get(),
     "org.junit.jupiter" to libs.versions.junit.get(),
     "org.junit.platform" to libs.versions.junit.get(),
