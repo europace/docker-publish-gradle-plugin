@@ -4,7 +4,7 @@ junit = "6.0.2"
 kotest = "6.1.1"
 kotlin = "2.3.0"
 kotlinx = "1.10.2"
-mockk = "1.14.7"
+mockk = "1.14.9"
 okio = "3.16.4"
 
 [libraries]
