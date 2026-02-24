@@ -22,4 +22,4 @@ jobs:
         with:
           repo-token: ${{ secrets.GH_ACTION_TOKEN }}
           labels: dependencies
-      - uses: gradle/actions/wrapper-validation@f29f5a9d7b09a7c6b29859002d29d24e1674c884 # 5.0.1
+      - uses: gradle/actions/wrapper-validation@0723195856401067f7a2779048b490ace7a47d7c # 5.0.2
