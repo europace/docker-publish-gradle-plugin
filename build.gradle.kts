@@ -5,7 +5,7 @@ val jvmVersion = JvmTarget.JVM_17
 
 plugins {
   alias(libs.plugins.kotlinJvm)
-  id("com.gradle.plugin-publish") version "2.1.0"
+  id("com.gradle.plugin-publish") version "2.1.1"
 }
 
 group = "de.europace.gradle"
