@@ -127,7 +127,7 @@ class DockerPublishPluginIntegrationTest : DescribeSpec({
           .build()
     }
     val expectedOutput = """
-        Execution failed for task ':buildImage'.
+        Execution failed for task ':buildImage' (registered by plugin '$PLUGIN_ID').
         > Failed to calculate the value of task ':buildImage' property 'imageName'.
            > organisation must be set
         """.trimIndent()
