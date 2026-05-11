@@ -8,9 +8,6 @@ plugins {
   id("com.gradle.plugin-publish") version "2.1.1"
 }
 
-group = "de.europace.gradle"
-logger.lifecycle("version: $version")
-
 val dependencyVersions = listOf(
     libs.annotations,
     libs.junitBom,
@@ -23,12 +20,22 @@ val dependencyVersions = listOf(
     libs.kotlinxIo
 )
 
-val dependencyVersionsByGroup = mapOf(
+val dependencyGroupVersionExcludes = mapOf(
+    "org.jetbrains.kotlinx" to listOf(
+        libs.kotlinxIo.get().name,
+        libs.kotlinxIoBytestring.get().name,
+        libs.kotlinxIoBytestringJvm.get().name,
+        libs.kotlinxIoJvm.get().name
+    )
+)
+
+val dependencyGroupVersions = mapOf(
     "net.bytebuddy" to libs.versions.byteBuddy.get(),
     "net.java.dev.jna" to libs.netJavaDev.get().version,
     "org.apache.groovy" to libs.groovy.get().version,
     "org.bouncycastle" to libs.bouncycastle.get().version,
     "org.jetbrains.kotlin" to libs.versions.kotlin.get(),
+    "org.jetbrains.kotlinx" to libs.versions.kotlinx.get(),
     "org.junit.jupiter" to libs.versions.junit.get(),
     "org.junit.platform" to libs.versions.junit.get(),
 )
@@ -68,8 +75,9 @@ allprojects {
       failOnVersionConflict()
       force(dependencyVersions)
       eachDependency {
-        val forcedVersion = dependencyVersionsByGroup[requested.group]
-        if (forcedVersion != null) {
+        val forcedVersion = dependencyGroupVersions[requested.group]
+        val excluded = dependencyGroupVersionExcludes[requested.group]?.any { it == requested.name } ?: false
+        if (forcedVersion != null && !excluded) {
           useVersion(forcedVersion)
         }
       }
