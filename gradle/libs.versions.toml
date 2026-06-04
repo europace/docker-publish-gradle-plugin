@@ -1,8 +1,8 @@
 [versions]
-byteBuddy = "1.18.8"
+byteBuddy = "1.18.10"
 junit = "6.1.0"
 kotest = "6.1.11"
-kotlin = "2.3.21"
+kotlin = "2.4.0"
 kotlinx = "1.11.0"
 kotlinxIo = "0.9.0"
 mockk = "1.14.11"
@@ -33,7 +33,7 @@ slf4j = { module = "org.slf4j:slf4j-api", version = "2.0.18" }
 junitBom = { module = "org.junit:junit-bom", version.ref = "junit" }
 junitJupiterEngine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 junitPlatformLauncher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit" }
-netJavaDev = { module = "net.java.dev.jna:jna", version = "5.18.1" }
+netJavaDev = { module = "net.java.dev.jna:jna", version = "5.19.0" }
 
 [bundles]
 kotest = ["kotest", "kotestEngine", "kotestProperty", "kotestRunner"]
