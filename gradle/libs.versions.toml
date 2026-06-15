@@ -33,7 +33,7 @@ slf4j = { module = "org.slf4j:slf4j-api", version = "2.0.18" }
 junitBom = { module = "org.junit:junit-bom", version.ref = "junit" }
 junitJupiterEngine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 junitPlatformLauncher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit" }
-netJavaDev = { module = "net.java.dev.jna:jna", version = "5.19.0" }
+netJavaDev = { module = "net.java.dev.jna:jna", version = "5.19.1" }
 
 [bundles]
 kotest = ["kotest", "kotestEngine", "kotestProperty", "kotestRunner"]
