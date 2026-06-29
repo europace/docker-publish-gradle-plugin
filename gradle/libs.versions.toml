@@ -1,6 +1,6 @@
 [versions]
 byteBuddy = "1.18.10"
-junit = "6.1.0"
+junit = "6.1.1"
 kotest = "6.2.1"
 kotlin = "2.4.0"
 kotlinx = "1.11.0"
