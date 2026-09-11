@@ -2,7 +2,7 @@
 byteBuddy = "1.18.13"
 junit = "6.1.3"
 kotest = "6.2.4"
-kotlin = "2.4.10"
+kotlin = "2.4.20"
 kotlinx = "1.11.0"
 kotlinxIo = "0.9.1"
 mockk = "1.14.11"
