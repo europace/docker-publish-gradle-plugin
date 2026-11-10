@@ -30,7 +30,7 @@ val dependencyGroupVersionExcludes = mapOf(
 )
 
 val dependencyGroupVersions = mapOf(
-    "net.bytebuddy" to libs.versions.byteBuddy.get(),
+    "net.bytebuddy" to libs.byteBuddy.get().version,
     "net.java.dev.jna" to libs.netJavaDev.get().version,
     "org.apache.groovy" to libs.groovy.get().version,
     "org.jetbrains.kotlin" to libs.versions.kotlin.get(),
@@ -62,7 +62,10 @@ repositories {
 
 dependencies {
   implementation(gradleApi())
-  implementation(libs.gradleDocker)
+  implementation(libs.gradleDocker) {
+    exclude(group = "com.kohlschutter.junixsocket", module = "junixsocket-core")
+  }
+  implementation(libs.junixsocketNativeCommon)
 
   testImplementation(libs.bundles.kotest)
   testImplementation(libs.mockk)
